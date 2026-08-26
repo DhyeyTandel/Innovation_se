@@ -1,0 +1,1024 @@
+<meta charset="utf-8">
+<title>Horizon Funnel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300..500;1,300..500&family=Sofia+Sans:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ tokens ============ */
+  :root{
+    --paper:#F4F0E9; --paper-lift:#FCFAF6; --card:#FFFFFF;
+    --ink:#17140F; --ink-soft:#2B2620; --body-color:#4B443A; --muted:#7C7367; --muted-soft:#A89E90;
+    --faint:#E6DFD2; --faint-soft:#EFEAE0;
+    --accent:#EE5308; --accent-deep:#C24303; --accent-soft:#FBE6D9;
+    --blurple:#5B4DF2; --blurple-soft:#E7E4FD;
+    --magenta:#DE3D9E; --magenta-soft:#FBE2F1;
+    --ink-surface:#17140F; --on-ink:#F4F0E9; --on-ink-muted:#A89E90;
+    --success:#1E8A5A; --success-soft:#DEF0E6; --error:#D0342C; --error-soft:#FBE1DF;
+
+    --r-card:4px; --r-input:8px; --r-media:24px; --r-pill:999px;
+    --shadow-soft:0 4px 24px rgba(23,20,15,.05);
+    --shadow-halo:0 2px 4px rgba(23,20,15,.04),0 24px 48px rgba(23,20,15,.08);
+    --shadow-lift:0 8px 16px rgba(23,20,15,.06),0 32px 64px rgba(23,20,15,.12);
+
+    --ease-spring:cubic-bezier(.34,1.56,.64,1); --ease-swift:cubic-bezier(.2,.7,.2,1);
+    --dur-fast:.18s; --dur:.32s;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#17140F; --paper-lift:#1E1912; --card:#201B13; --ink:#F4F0E9;
+      --ink-soft:#EFEAE0; --body-color:#C9C0B2; --muted:#A89E90; --muted-soft:#6E6455;
+      --faint:#332D23; --faint-soft:#2A2519; --accent-soft:#3A2313; --accent-deep:#FF8A4D;
+      --blurple-soft:#242046; --magenta-soft:#3A1C2E; --ink-surface:#0F0C08;
+      --success-soft:#173327; --error-soft:#3A1E1B;
+      --shadow-soft:0 4px 24px rgba(0,0,0,.25); --shadow-halo:0 2px 4px rgba(0,0,0,.3),0 24px 48px rgba(0,0,0,.35);
+      --shadow-lift:0 8px 16px rgba(0,0,0,.3),0 32px 64px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#17140F; --paper-lift:#1E1912; --card:#201B13; --ink:#F4F0E9;
+    --ink-soft:#EFEAE0; --body-color:#C9C0B2; --muted:#A89E90; --muted-soft:#6E6455;
+    --faint:#332D23; --faint-soft:#2A2519; --accent-soft:#3A2313; --accent-deep:#FF8A4D;
+    --blurple-soft:#242046; --magenta-soft:#3A1C2E; --ink-surface:#0F0C08;
+    --success-soft:#173327; --error-soft:#3A1E1B;
+    --shadow-soft:0 4px 24px rgba(0,0,0,.25); --shadow-halo:0 2px 4px rgba(0,0,0,.3),0 24px 48px rgba(0,0,0,.35);
+    --shadow-lift:0 8px 16px rgba(0,0,0,.3),0 32px 64px rgba(0,0,0,.4);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper); color:var(--body-color);
+    font-family:'Sofia Sans',system-ui,-apple-system,sans-serif; font-weight:450; font-size:16.5px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Newsreader',Georgia,serif; font-weight:400; color:var(--ink); letter-spacing:-0.02em; text-wrap:balance; margin:0;}
+  em{font-style:italic; color:var(--accent);}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+  a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--faint); text-underline-offset:3px;}
+  a:hover{color:var(--accent); text-decoration-color:var(--accent);}
+  button{font-family:inherit; cursor:pointer;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  ::selection{background:var(--accent-soft); color:var(--ink);}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none;}
+
+  .wrap{max-width:1160px; margin:0 auto; padding:0 24px;}
+
+  /* ============ header ============ */
+  header.top{
+    position:sticky; top:0; z-index:30; background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--faint);
+  }
+  .top-inner{display:flex; align-items:center; gap:28px; padding:16px 24px; max-width:1160px; margin:0 auto; flex-wrap:wrap;}
+  .brand{display:flex; align-items:baseline; gap:10px; flex:none;}
+  .brand h1{font-size:24px;}
+  .brand .mono{font-size:10.5px; color:var(--muted-soft);}
+  nav.tabs{display:flex; gap:4px; flex:1; min-width:240px;}
+  nav.tabs button{
+    background:none; border:none; padding:8px 14px; border-radius:var(--r-pill);
+    font-family:'Sofia Sans',sans-serif; font-weight:560; font-size:14.5px; color:var(--muted);
+    transition:background var(--dur-fast) var(--ease-swift), color var(--dur-fast) var(--ease-swift);
+  }
+  nav.tabs button:hover{color:var(--ink);}
+  nav.tabs button.active{background:var(--ink-surface); color:var(--on-ink);}
+  .btn{
+    display:inline-flex; align-items:center; gap:7px; border-radius:var(--r-pill); border:1px solid transparent;
+    padding:9px 18px; font-weight:600; font-size:14.5px; transition:transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast);
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--accent); color:#fff;}
+  .btn-primary:hover{box-shadow:var(--shadow-lift); transform:translateY(-1px);}
+  .btn-ghost{background:transparent; border-color:var(--faint); color:var(--ink-soft);}
+  .btn-ghost:hover{border-color:var(--muted-soft);}
+  .btn-text{background:none; border:none; color:var(--muted); font-weight:600; font-size:13px; padding:4px 2px; text-decoration:underline; text-decoration-color:var(--faint);}
+  .btn-text:hover{color:var(--accent);}
+
+  main{padding:36px 0 80px;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block; animation:fadeUp .32s var(--ease-spring);}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:20px; flex-wrap:wrap;}
+  .section-head h2{font-size:26px;}
+  .section-head p{margin:4px 0 0; color:var(--muted); font-size:14.5px; max-width:60ch;}
+
+  /* ============ stat cards ============ */
+  .stat-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:28px;}
+  .stat-card{
+    background:var(--card); border:1px solid var(--faint); border-radius:var(--r-card); padding:16px 18px;
+    box-shadow:var(--shadow-soft);
+  }
+  .stat-card .label{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-soft);}
+  .stat-card .value{font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:6px;}
+  .stat-card .sub{font-size:12.5px; color:var(--muted); margin-top:4px;}
+  .horizon-mix{display:flex; height:6px; border-radius:99px; overflow:hidden; margin-top:10px; background:var(--faint-soft);}
+  .horizon-mix span{height:100%;}
+
+  /* ============ chart panels ============ */
+  .chart-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:16px;}
+  @media (max-width:860px){ .chart-grid{grid-template-columns:1fr;} }
+  .panel{background:var(--card); border:1px solid var(--faint); border-radius:var(--r-card); padding:20px 22px; box-shadow:var(--shadow-soft);}
+  .panel h3{font-size:18px; margin-bottom:2px;}
+  .panel .hint{font-size:12.5px; color:var(--muted); margin-bottom:14px;}
+  .panel .scroller{overflow-x:auto;}
+  svg text{font-family:'JetBrains Mono',monospace;}
+
+  /* ============ legend ============ */
+  .legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:12px;}
+  .legend-item{display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted);}
+  .legend-dot{width:9px; height:9px; border-radius:50%; flex:none;}
+
+  /* ============ board ============ */
+  .board{display:grid; grid-auto-flow:column; grid-auto-columns:minmax(230px,1fr); gap:14px; overflow-x:auto; padding-bottom:8px;}
+  .col{background:var(--paper-lift); border:1px solid var(--faint); border-radius:var(--r-card); padding:12px; min-height:120px;}
+  .col-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; padding:0 2px;}
+  .col-head .name{font-weight:600; color:var(--ink-soft); font-size:14.5px;}
+  .col-head .count{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted); background:var(--faint-soft); padding:1px 8px; border-radius:99px;}
+  .idea-card{
+    background:var(--card); border:1px solid var(--faint); border-radius:var(--r-card); padding:12px 13px; margin-bottom:10px;
+    cursor:pointer; transition:transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast);
+  }
+  .idea-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-lift);}
+  .idea-card .title{font-weight:600; color:var(--ink); font-size:14.5px; margin-bottom:6px;}
+  .idea-card .tags{display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;}
+  .tag{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.04em; text-transform:uppercase; padding:2px 7px; border-radius:5px; border:1px solid var(--faint); color:var(--muted);}
+  .tag-h1{background:var(--accent-soft); color:var(--accent-deep); border-color:transparent;}
+  .tag-h2{background:var(--blurple-soft); color:var(--blurple); border-color:transparent;}
+  .tag-h3{background:var(--magenta-soft); color:var(--magenta); border-color:transparent;}
+  .trl-track{display:flex; gap:2px; margin-bottom:8px;}
+  .trl-seg{flex:1; height:4px; border-radius:2px; background:var(--faint);}
+  .trl-seg.on{background:var(--ink-soft);}
+  .idea-card .foot{display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .score-pill{font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:600; padding:2px 8px; border-radius:99px;}
+  .score-hi{background:var(--success-soft); color:var(--success);}
+  .score-mid{background:var(--faint-soft); color:var(--ink-soft);}
+  .score-lo{background:var(--error-soft); color:var(--error);}
+  select.stage-quick{font-family:'JetBrains Mono',monospace; font-size:10.5px; border:1px solid var(--faint); border-radius:6px; background:var(--paper-lift); color:var(--muted); padding:2px 4px;}
+
+  /* ============ shortlist ============ */
+  .threshold-row{display:flex; align-items:center; gap:14px; margin-bottom:20px; flex-wrap:wrap;}
+  .threshold-row input[type=range]{width:220px; accent-color:var(--accent);}
+  table.shortlist{width:100%; border-collapse:collapse; font-size:14px;}
+  table.shortlist th{
+    text-align:left; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--muted-soft); font-weight:600; padding:0 10px 10px; border-bottom:1px solid var(--faint);
+  }
+  table.shortlist td{padding:12px 10px; border-bottom:1px solid var(--faint-soft); vertical-align:middle;}
+  table.shortlist tr:hover td{background:var(--paper-lift);}
+  .rank{font-family:'JetBrains Mono',monospace; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .bar-track{width:100px; height:6px; background:var(--faint-soft); border-radius:99px; overflow:hidden;}
+  .bar-fill{height:100%; border-radius:99px;}
+  .empty-state{text-align:center; padding:60px 20px; color:var(--muted);}
+  .empty-state .glyph{font-size:34px; margin-bottom:10px; color:var(--muted-soft);}
+
+  /* ============ playbook ============ */
+  .playbook-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:32px;}
+  @media (max-width:760px){ .playbook-grid{grid-template-columns:1fr;} }
+  .horizon-card{border-radius:var(--r-card); padding:18px; border:1px solid var(--faint);}
+  .horizon-card h4{font-family:'Newsreader',serif; font-size:19px; font-weight:500; margin-bottom:6px;}
+  .horizon-card p{font-size:13.5px; margin:0 0 8px;}
+  .horizon-card .meta{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);}
+  .h1card{background:var(--accent-soft);} .h1card h4{color:var(--accent-deep);}
+  .h2card{background:var(--blurple-soft);} .h2card h4{color:var(--blurple);}
+  .h3card{background:var(--magenta-soft);} .h3card h4{color:var(--magenta);}
+
+  table.trl-table{width:100%; border-collapse:collapse; font-size:13.5px; margin-bottom:32px;}
+  table.trl-table th{text-align:left; font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-soft); padding:0 10px 8px; border-bottom:1px solid var(--faint);}
+  table.trl-table td{padding:9px 10px; border-bottom:1px solid var(--faint-soft);}
+  table.trl-table td.n{font-family:'JetBrains Mono',monospace; font-weight:600; color:var(--ink); width:36px;}
+
+  .method-list{display:grid; gap:14px; margin-bottom:32px;}
+  .method-item{display:grid; grid-template-columns:140px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid var(--faint-soft);}
+  @media (max-width:600px){ .method-item{grid-template-columns:1fr;} }
+  .method-item .name{font-weight:600; color:var(--ink); font-size:14.5px;}
+  .method-item p{margin:0; font-size:13.5px;}
+
+  .course-list{display:grid; gap:10px;}
+  .course-item{border:1px solid var(--faint); border-radius:var(--r-card); padding:14px 16px; background:var(--card);}
+  .course-item .school{font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-soft);}
+  .course-item .cname{font-weight:600; color:var(--ink); margin:2px 0 4px;}
+  .course-item p{font-size:13px; margin:0;}
+
+  /* ============ modal ============ */
+  .overlay{position:fixed; inset:0; background:rgba(23,20,15,.5); display:none; align-items:flex-start; justify-content:center; padding:40px 16px; z-index:100; overflow-y:auto;}
+  .overlay.open{display:flex;}
+  .modal{background:var(--card); border-radius:14px; max-width:640px; width:100%; box-shadow:var(--shadow-lift); animation:fadeUp .28s var(--ease-spring);}
+  .modal-head{display:flex; align-items:center; justify-content:space-between; padding:18px 22px; border-bottom:1px solid var(--faint);}
+  .modal-head h3{font-size:20px;}
+  .modal-close{background:none; border:none; font-size:20px; color:var(--muted); line-height:1; padding:4px;}
+  .modal-close:hover{color:var(--ink);}
+  .modal-body{padding:20px 22px; display:grid; gap:16px; max-height:70vh; overflow-y:auto;}
+  .field label{display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-soft); margin-bottom:6px;}
+  .field input[type=text], .field textarea, .field select{
+    width:100%; border:1px solid var(--faint); border-radius:var(--r-input); padding:9px 11px; font-family:'Sofia Sans',sans-serif;
+    font-size:14.5px; color:var(--ink); background:var(--paper-lift);
+  }
+  .field textarea{resize:vertical; min-height:56px; line-height:1.5;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:520px){ .field-row{grid-template-columns:1fr;} }
+  .pill-radio{display:flex; gap:8px; flex-wrap:wrap;}
+  .pill-radio label{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:6px 12px; border-radius:99px; border:1px solid var(--faint);
+    color:var(--muted); cursor:pointer; transition:all var(--dur-fast);
+  }
+  .pill-radio input{display:none;}
+  .pill-radio input:checked + span{}
+  .pill-radio label:has(input:checked).h1{background:var(--accent-soft); color:var(--accent-deep); border-color:transparent;}
+  .pill-radio label:has(input:checked).h2{background:var(--blurple-soft); color:var(--blurple); border-color:transparent;}
+  .pill-radio label:has(input:checked).h3{background:var(--magenta-soft); color:var(--magenta); border-color:transparent;}
+  .trl-def{font-size:12.5px; color:var(--muted); margin-top:6px; background:var(--paper-lift); border:1px solid var(--faint-soft); border-radius:8px; padding:8px 10px;}
+  input[type=range]{width:100%; accent-color:var(--accent);}
+  .score-row{display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px; margin-bottom:4px;}
+  .score-row .n{font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink); width:16px; text-align:right;}
+  .composite-readout{display:flex; align-items:center; justify-content:space-between; background:var(--ink-surface); color:var(--on-ink); border-radius:10px; padding:12px 16px; margin-top:6px;}
+  .composite-readout .num{font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:600;}
+  .composite-readout .lbl{font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--on-ink-muted);}
+  fieldset{border:1px solid var(--faint); border-radius:10px; padding:14px 16px; margin:0;}
+  fieldset legend{font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-soft); padding:0 6px;}
+  .assist-out{width:100%; min-height:120px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.55; border:1px solid var(--faint); border-radius:8px; padding:10px; background:var(--paper-lift); color:var(--ink-soft); resize:vertical;}
+  .assist-row{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px;}
+  .modal-foot{display:flex; justify-content:space-between; align-items:center; padding:16px 22px; border-top:1px solid var(--faint);}
+
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink-surface); color:var(--on-ink); padding:10px 20px; border-radius:99px; font-size:13.5px; box-shadow:var(--shadow-lift); opacity:0; pointer-events:none; transition:all var(--dur) var(--ease-spring); z-index:200;}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  footer{border-top:1px solid var(--faint); padding:22px 0; margin-top:20px;}
+  .footer-row{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:12.5px; color:var(--muted);}
+  .footer-actions{display:flex; gap:14px; align-items:center;}
+  #import-input{display:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none !important; transition:none !important;}
+  }
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <h1>Horizon <em>Funnel</em></h1>
+      <span class="mono">v1</span>
+    </div>
+    <nav class="tabs" id="tabnav">
+      <button data-tab="overview" class="active">Overview</button>
+      <button data-tab="board">Board</button>
+      <button data-tab="shortlist">Shortlist</button>
+      <button data-tab="playbook">Playbook</button>
+    </nav>
+    <button class="btn btn-primary" id="btn-new">+ New idea</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="tab-panel active" id="tab-overview">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Systematic innovation workbench</span>
+        <h2 style="margin-top:6px;">Capture → classify → fund</h2>
+        <p>Every idea gets a horizon, a readiness level, and a funnel score — so the portfolio, not just the loudest idea, decides what gets built next.</p>
+      </div>
+    </div>
+    <div class="stat-row" id="stat-row"></div>
+    <div class="chart-grid">
+      <div class="panel">
+        <h3>Funnel</h3>
+        <div class="hint">Ideas by stage-gate. Width = share of live ideas at that gate.</div>
+        <div class="scroller"><svg id="funnel-svg" viewBox="0 0 560 330" style="width:100%; height:auto; min-width:420px;"></svg></div>
+      </div>
+      <div class="panel">
+        <h3>Horizon × TRL matrix</h3>
+        <div class="hint">Bubble size = funnel score. Click a bubble to open it.</div>
+        <div class="scroller"><svg id="matrix-svg" viewBox="0 0 560 300" style="width:100%; height:auto; min-width:420px;"></svg></div>
+        <div class="legend">
+          <div class="legend-item"><span class="legend-dot" style="background:var(--magenta)"></span>H3 · transformational</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--blurple)"></span>H2 · adjacent</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--accent)"></span>H1 · core</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BOARD ================= -->
+  <section class="tab-panel" id="tab-board">
+    <div class="section-head">
+      <div>
+        <h2>Stage-gate board</h2>
+        <p>Discover → Define → Develop → Validate → Scale. Move an idea with the quick-select, or open it to re-score.</p>
+      </div>
+    </div>
+    <div class="board" id="board"></div>
+  </section>
+
+  <!-- ================= SHORTLIST ================= -->
+  <section class="tab-panel" id="tab-shortlist">
+    <div class="section-head">
+      <div>
+        <h2>Shortlist</h2>
+        <p>The funnel gate: only ideas scoring at or above the threshold survive to get resourced.</p>
+      </div>
+    </div>
+    <div class="threshold-row">
+      <label class="mono" style="font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-soft);">Gate threshold</label>
+      <input type="range" id="threshold" min="0" max="100" step="5" value="70">
+      <span class="mono" id="threshold-val" style="font-weight:600; color:var(--ink);">70</span>
+    </div>
+    <div id="shortlist-wrap"></div>
+  </section>
+
+  <!-- ================= PLAYBOOK ================= -->
+  <section class="tab-panel" id="tab-playbook">
+    <div class="section-head">
+      <div>
+        <h2>Playbook</h2>
+        <p>The frameworks this tool runs on, in one place.</p>
+      </div>
+    </div>
+
+    <span class="eyebrow" style="margin-bottom:10px;">Horizons — where an idea sits on the growth curve</span>
+    <div class="playbook-grid" style="margin-top:12px;">
+      <div class="horizon-card h1card">
+        <h4>H1 · Core</h4>
+        <p>Extends and defends what already earns. Incremental, funds itself.</p>
+        <div class="meta">0–12 months · ~70% of portfolio</div>
+      </div>
+      <div class="horizon-card h2card">
+        <h4>H2 · Adjacent</h4>
+        <p>A new segment, channel, or meaningful redesign next to the core.</p>
+        <div class="meta">1–3 years · ~20% of portfolio</div>
+      </div>
+      <div class="horizon-card h3card">
+        <h4>H3 · Transformational</h4>
+        <p>Options on a future that doesn't exist yet. High uncertainty, small bets.</p>
+        <div class="meta">3+ years · ~10% of portfolio</div>
+      </div>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-top:-18px; margin-bottom:32px;">Adapted from McKinsey's Three Horizons of Growth (Baghai, Coley &amp; White, <em style="color:inherit; font-style:italic;">The Alchemy of Growth</em>, 1999).</p>
+
+    <span class="eyebrow" style="margin-bottom:10px;">Readiness scale — how proven an idea is, 1–9</span>
+    <table class="trl-table" id="trl-table" style="margin-top:12px;"></table>
+    <p style="font-size:13px; color:var(--muted); margin-top:-18px; margin-bottom:32px;">Adapted from NASA/DoD Technology Readiness Levels — originally hardware-only, generalized here to cover processes and services too.</p>
+
+    <span class="eyebrow" style="margin-bottom:10px;">Funneling techniques used here</span>
+    <div class="method-list" style="margin-top:14px;">
+      <div class="method-item">
+        <div class="name">Stage-gate</div>
+        <p>The five Board columns are checkpoints, not status labels — an idea needs a deliberate decision to cross each gate, not just time passing.</p>
+      </div>
+      <div class="method-item">
+        <div class="name">Weighted scoring</div>
+        <p>Desirability, feasibility, viability (IDEO's three lenses) plus strategic fit, averaged into one 0–100 funnel score per idea.</p>
+      </div>
+      <div class="method-item">
+        <div class="name">Horizon × TRL matrix</div>
+        <p>A portfolio-level funnel: it exposes a pipeline stuffed with unproven H1 bets, or a total absence of H3 options, at a glance.</p>
+      </div>
+      <div class="method-item">
+        <div class="name">Threshold gate</div>
+        <p>The Shortlist tab applies a single cutoff score — raise it to force-rank harder, lower it to keep more options alive longer.</p>
+      </div>
+      <div class="method-item">
+        <div class="name">Divergent techniques</div>
+        <p>SCAMPER, TRIZ contradiction analysis, Jobs-to-be-Done, first-principles, and analogical transfer feed the top of the funnel — see Ideation assist inside any idea.</p>
+      </div>
+    </div>
+
+    <span class="eyebrow" style="margin-bottom:10px;">Courses this drew on</span>
+    <div class="course-list" style="margin-top:14px; margin-bottom:10px;">
+      <div class="course-item">
+        <div class="school">MIT Sloan Executive Education</div>
+        <div class="cname">Systematic Innovation of Products, Processes, and Services</div>
+        <p>5-day program (S. Eppinger et al.) — Design Structure Matrix, customer-needs analysis, platform strategy, design for sustainability, GenAI for innovation tasks.</p>
+      </div>
+      <div class="course-item">
+        <div class="school">MIT Professional Education</div>
+        <div class="cname">Product Innovation in the Age of AI · Breakthrough Innovation: Harnessing AI</div>
+        <p>4-day on-campus programs applying GenAI tooling directly to the innovation funnel.</p>
+      </div>
+      <div class="course-item">
+        <div class="school">MIT xPRO</div>
+        <div class="cname">Technology &amp; Innovation Acceleration Program</div>
+        <p>Six pillars: critical thinking, systems thinking, value creation via emerging tech, radical innovation, org strategy, leadership.</p>
+      </div>
+      <div class="course-item">
+        <div class="school">Harvard Business School Online</div>
+        <div class="cname">Design Thinking and Innovation</div>
+        <p>7-week program (Dean Srikant Datar) — design-thinking principles and an innovation toolkit for identifying opportunities and generating solutions.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>Data lives only in this browser (localStorage) — nothing is sent anywhere.</span>
+    <div class="footer-actions">
+      <button class="btn-text" id="btn-export">Export backup</button>
+      <button class="btn-text" id="btn-import">Import backup</button>
+      <input type="file" id="import-input" accept="application/json">
+    </div>
+  </div>
+</footer>
+
+<!-- ================= MODAL ================= -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">New idea</h3>
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="f-title">Title</label>
+        <input type="text" id="f-title" placeholder="Name the idea in one line">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-type">Type</label>
+          <select id="f-type">
+            <option>Product</option>
+            <option>Process</option>
+            <option>Service</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Horizon</label>
+          <div class="pill-radio">
+            <label class="h1"><input type="radio" name="horizon" value="H1"><span>H1 core</span></label>
+            <label class="h2"><input type="radio" name="horizon" value="H2"><span>H2 adjacent</span></label>
+            <label class="h3"><input type="radio" name="horizon" value="H3"><span>H3 future</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-problem">Problem / opportunity</label>
+        <textarea id="f-problem" placeholder="What gap, friction, or unmet need does this address?"></textarea>
+      </div>
+      <div class="field">
+        <label for="f-desc">Description</label>
+        <textarea id="f-desc" placeholder="What is it, concretely?"></textarea>
+      </div>
+
+      <fieldset>
+        <legend>Ideation assist</legend>
+        <div class="assist-row">
+          <select id="f-framework" style="flex:1; min-width:160px; border:1px solid var(--faint); border-radius:8px; padding:8px 10px; background:var(--paper-lift); font-family:inherit; font-size:13.5px;">
+            <option value="scamper">SCAMPER</option>
+            <option value="triz">TRIZ contradiction</option>
+            <option value="jtbd">Jobs-to-be-Done</option>
+            <option value="fp">First-principles</option>
+            <option value="analogy">Analogical transfer / biomimicry</option>
+          </select>
+          <button class="btn btn-ghost" id="btn-generate" type="button">Generate prompt</button>
+          <button class="btn btn-ghost" id="btn-copy" type="button">Copy</button>
+        </div>
+        <textarea class="assist-out" id="assist-out" readonly placeholder="Fill in a title + problem above, pick a framework, then Generate. Paste the result into Claude, ChatGPT, or any GenAI tool."></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Readiness (TRL)</legend>
+        <input type="range" id="f-trl" min="1" max="9" step="1" value="1">
+        <div class="mono" id="trl-label" style="font-size:13px; font-weight:600; color:var(--ink); margin-top:4px;">TRL 1</div>
+        <div class="trl-def" id="trl-def-live"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Stage</legend>
+        <select id="f-stage">
+          <option value="0">Discover</option>
+          <option value="1">Define</option>
+          <option value="2">Develop</option>
+          <option value="3">Validate</option>
+          <option value="4">Scale</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Funnel score inputs (0–5 each)</legend>
+        <div class="score-row"><label style="font-size:13px;">Desirability — do people want it?</label><span class="n" id="v-desirability">3</span></div>
+        <input type="range" id="f-desirability" min="0" max="5" step="1" value="3">
+        <div class="score-row" style="margin-top:10px;"><label style="font-size:13px;">Feasibility — can we build it?</label><span class="n" id="v-feasibility">3</span></div>
+        <input type="range" id="f-feasibility" min="0" max="5" step="1" value="3">
+        <div class="score-row" style="margin-top:10px;"><label style="font-size:13px;">Viability — does it pay for itself?</label><span class="n" id="v-viability">3</span></div>
+        <input type="range" id="f-viability" min="0" max="5" step="1" value="3">
+        <div class="score-row" style="margin-top:10px;"><label style="font-size:13px;">Strategic fit — does it belong here?</label><span class="n" id="v-fit">3</span></div>
+        <input type="range" id="f-fit" min="0" max="5" step="1" value="3">
+        <div class="composite-readout">
+          <span class="lbl">Funnel score</span>
+          <span class="num" id="composite-val">60</span>
+        </div>
+      </fieldset>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-text" id="btn-delete" style="color:var(--error); display:none;">Delete idea</button>
+      <div style="display:flex; gap:10px; margin-left:auto;">
+        <button class="btn btn-ghost" id="btn-cancel">Cancel</button>
+        <button class="btn btn-primary" id="btn-save">Save idea</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var STAGES = ["Discover","Define","Develop","Validate","Scale"];
+  var HORIZONS = {
+    H1:{label:"H1 core", color:"var(--accent)", soft:"var(--accent-soft)", deep:"var(--accent-deep)"},
+    H2:{label:"H2 adjacent", color:"var(--blurple)", soft:"var(--blurple-soft)", deep:"var(--blurple)"},
+    H3:{label:"H3 future", color:"var(--magenta)", soft:"var(--magenta-soft)", deep:"var(--magenta)"}
+  };
+  var TRL_DEFS = [
+    "Observed — a problem, gap, or opportunity has been noticed and named. No solution exists yet.",
+    "Concept — a solution concept is sketched and a hypothesis stated, but untested.",
+    "Proof of concept — desk research, a mockup, or a small experiment shows it's plausible in principle.",
+    "Validated in a controlled setting — a prototype or draft workflow tested internally, away from real conditions.",
+    "Validated in a relevant environment — tested with real users or real operating conditions, at small scale.",
+    "Demonstrated in a relevant environment — piloted with real customers or real operations, closely monitored.",
+    "Operational prototype — a near-final version running under live conditions with minimal hand-holding.",
+    "Qualified — fully built, tested, and signed off (quality, compliance, ops) for full rollout.",
+    "Proven in operation — live at scale, delivering its intended value as business-as-usual."
+  ];
+
+  var STORAGE_KEY = "horizonfunnel.ideas.v2";
+  var ideas = [];
+  var editingId = null;
+
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  function seed(){
+    return [
+      {id:uid(), title:"AI resume tailoring assistant", type:"Service", horizon:"H1", trl:6, stage:3,
+       problem:"Tailoring a resume per job posting is slow and inconsistent by hand.",
+       description:"A GenAI workflow that rewrites a fixed resume skeleton against each job description while keeping every claim verifiable.",
+       desirability:5, feasibility:5, viability:4, fit:5, createdAt:Date.now()-1000*60*60*24*40},
+      {id:uid(), title:"DSA mobile transcription formatter", type:"Process", horizon:"H1", trl:8, stage:4,
+       problem:"Retyping solutions by hand from a phone breaks on long lines and deep nesting.",
+       description:"A formatting rule (line width, indent depth, depth-marked copy) applied to every solution before it's shared.",
+       desirability:4, feasibility:5, viability:3, fit:4, createdAt:Date.now()-1000*60*60*24*90},
+      {id:uid(), title:"Kaggle compute-budget scheduler", type:"Product", horizon:"H2", trl:3, stage:1,
+       problem:"Free-tier GPU quota on Kaggle runs out mid-experiment with no warning.",
+       description:"A small scheduler that queues training runs against remaining free-tier hours and checkpoints before the quota resets.",
+       desirability:3, feasibility:3, viability:2, fit:3, createdAt:Date.now()-1000*60*60*24*10},
+      {id:uid(), title:"Autonomous multi-agent codebase refactorer", type:"Product", horizon:"H3", trl:2, stage:0,
+       problem:"Large refactors still need a human to sequence and verify every step.",
+       description:"A team of coordinating agents that plans a refactor, executes it in isolated branches, and self-verifies before merging.",
+       desirability:4, feasibility:2, viability:2, fit:4, createdAt:Date.now()-1000*60*60*24*3}
+    ];
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){ ideas = JSON.parse(raw); return; }
+    }catch(e){}
+    ideas = seed();
+    save();
+  }
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(ideas)); }catch(e){}
+  }
+
+  function composite(o){
+    var sum = (+o.desirability||0)+(+o.feasibility||0)+(+o.viability||0)+(+o.fit||0);
+    return Math.round(sum/20*100);
+  }
+  function scoreClass(s){ return s>=70 ? "score-hi" : (s>=40 ? "score-mid" : "score-lo"); }
+  function scoreColor(s){ return s>=70 ? "var(--success)" : (s>=40 ? "var(--muted)" : "var(--error)"); }
+
+  function toast(msg){
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(t._h);
+    t._h = setTimeout(function(){ t.classList.remove("show"); }, 2600);
+  }
+
+  /* ---------- templates ---------- */
+  function tmpl(kind, title, type, problem, desc){
+    var head = "IDEA: "+(title||"(untitled)")+" ("+type+")\nPROBLEM: "+(problem||"—")+"\nCONTEXT: "+(desc||"—")+"\n\n";
+    if(kind==="scamper"){
+      return head+"Apply SCAMPER to this idea. For each lens below, propose one concrete variant plus a one-sentence risk/benefit:\n"+
+      "- Substitute — what component, step, or actor could be swapped out?\n"+
+      "- Combine — what adjacent idea or service could this merge with?\n"+
+      "- Adapt — what analogous solution from another industry could be borrowed?\n"+
+      "- Modify/Magnify — what if scale, frequency, or intensity changed?\n"+
+      "- Put to another use — who else, in what other context, could use this as-is?\n"+
+      "- Eliminate — what step or constraint could be removed entirely?\n"+
+      "- Reverse/Rearrange — what if the sequence or roles were inverted?\n\n"+
+      "Close with the 2 variants most worth prototyping next, and why.";
+    }
+    if(kind==="triz"){
+      return head+"Apply a simplified TRIZ contradiction analysis:\n"+
+      "1. Name the core contradiction — what improves as this idea gets closer to ideal, and what gets worse as a side effect?\n"+
+      "2. Suggest 3 of the 40 TRIZ inventive principles most relevant to resolving it (e.g. Segmentation, Asymmetry, Prior Action, Self-Service, Feedback) and how each applies here.\n"+
+      "3. State an 'ideal final result': what would this look like if the problem solved itself at zero added cost or complexity?";
+    }
+    if(kind==="jtbd"){
+      return head+"Apply Jobs-to-be-Done thinking:\n"+
+      "1. State the functional job the user is 'hiring' this for.\n"+
+      "2. State the emotional job (how do they want to feel?).\n"+
+      "3. State the social job (how do they want to be perceived?).\n"+
+      "4. List current alternatives/workarounds and why they're unsatisfying.\n"+
+      "5. Propose 3 concepts that would get this job done meaningfully better than the alternatives.";
+    }
+    if(kind==="fp"){
+      return head+"Break this down with first-principles reasoning:\n"+
+      "1. List every assumption baked into how this is normally solved.\n"+
+      "2. For each, ask: fundamentally true, or just convention? Flag the conventions.\n"+
+      "3. Rebuild a solution using only the fundamentally true constraints.\n"+
+      "4. Compare the first-principles version against the conventional approach.";
+    }
+    return head+"Use analogical transfer / biomimicry:\n"+
+    "1. Restate the core mechanism of this problem in abstract, domain-free terms.\n"+
+    "2. Name 3 unrelated domains (nature, another industry, a historical solution) that solve a structurally similar problem.\n"+
+    "3. For each, describe the analogous mechanism and translate it back into a concrete concept here.\n"+
+    "4. Pick the strongest analogy and sketch a first prototype.";
+  }
+
+  /* ---------- rendering ---------- */
+  function el(tag, cls, html){
+    var e = document.createElement(tag);
+    if(cls) e.className = cls;
+    if(html!==undefined) e.innerHTML = html;
+    return e;
+  }
+
+  function renderStats(){
+    var row = document.getElementById("stat-row");
+    row.innerHTML = "";
+    var total = ideas.length;
+    var avgTrl = total ? (ideas.reduce(function(a,o){return a+(+o.trl||0);},0)/total).toFixed(1) : "0.0";
+    var threshold = +document.getElementById("threshold").value;
+    var shortlisted = ideas.filter(function(o){ return composite(o) >= threshold; }).length;
+    var h1 = ideas.filter(function(o){return o.horizon==="H1";}).length;
+    var h2 = ideas.filter(function(o){return o.horizon==="H2";}).length;
+    var h3 = ideas.filter(function(o){return o.horizon==="H3";}).length;
+
+    function card(label, value, sub){
+      var c = el("div","stat-card");
+      c.innerHTML = '<div class="label">'+label+'</div><div class="value">'+value+'</div>'+(sub?'<div class="sub">'+sub+'</div>':'');
+      return c;
+    }
+    row.appendChild(card("Total ideas", total, "in the pipeline"));
+    row.appendChild(card("Shortlisted", shortlisted, "at ≥"+threshold+" score"));
+    row.appendChild(card("Avg. readiness", "TRL "+avgTrl, "across all ideas"));
+    var mixCard = card("Horizon mix", h1+" / "+h2+" / "+h3, "H1 / H2 / H3");
+    var mix = el("div","horizon-mix");
+    var t = total||1;
+    mix.innerHTML =
+      '<span style="width:'+(h1/t*100)+'%; background:var(--accent)"></span>'+
+      '<span style="width:'+(h2/t*100)+'%; background:var(--blurple)"></span>'+
+      '<span style="width:'+(h3/t*100)+'%; background:var(--magenta)"></span>';
+    mixCard.appendChild(mix);
+    row.appendChild(mixCard);
+  }
+
+  function renderFunnel(){
+    var svg = document.getElementById("funnel-svg");
+    var counts = STAGES.map(function(_,i){ return ideas.filter(function(o){return o.stage===i;}).length; });
+    var max = Math.max.apply(null, counts.concat([1]));
+    var totalLive = counts.reduce(function(a,b){return a+b;},0) || 1;
+    var W = 560, H = 330, top=10, rowH=58, gap=8, minW=90, maxW=440;
+    var svgns = "http://www.w3.org/2000/svg";
+    var parts = [];
+    STAGES.forEach(function(name,i){
+      var wTop = minW + (maxW-minW) * (counts[i]/max);
+      var wBot = wTop * 0.84;
+      var y0 = top + i*(rowH+gap);
+      var y1 = y0 + rowH;
+      var xTop0 = (W-wTop)/2, xTop1 = xTop0+wTop;
+      var xBot0 = (W-wBot)/2, xBot1 = xBot0+wBot;
+      var fill = i===0?"var(--accent)":(i<3?"var(--ink-soft)":"var(--success)");
+      var pct = Math.round(counts[i]/totalLive*100);
+      parts.push(
+        '<polygon points="'+xTop0+','+y0+' '+xTop1+','+y0+' '+xBot1+','+y1+' '+xBot0+','+y1+'" fill="'+fill+'" opacity="0.88"></polygon>'+
+        '<text x="12" y="'+(y0+rowH/2-6)+'" font-size="12" font-weight="600" fill="var(--ink)">'+name+'</text>'+
+        '<text x="12" y="'+(y0+rowH/2+12)+'" font-size="10" fill="var(--muted)">'+counts[i]+' idea'+(counts[i]===1?"":"s")+' · '+pct+'% of pipeline</text>'
+      );
+    });
+    svg.setAttribute("viewBox","0 0 "+W+" "+(top + STAGES.length*(rowH+gap)));
+    svg.innerHTML = parts.join("");
+  }
+
+  function renderMatrix(){
+    var svg = document.getElementById("matrix-svg");
+    var W=560, H=300, ml=54, mr=16, mt=14, mb=30;
+    var plotW = W-ml-mr, plotH = H-mt-mb;
+    var colW = plotW/9;
+    var bandH = plotH/3;
+    var bandOrder = ["H3","H2","H1"]; // top to bottom
+    var svgns_parts = [];
+
+    // grid + axis
+    for(var t=1;t<=9;t++){
+      var x = ml + (t-0.5)*colW;
+      svgns_parts.push('<line x1="'+x+'" y1="'+mt+'" x2="'+x+'" y2="'+(mt+plotH)+'" stroke="var(--faint)" stroke-width="1"></line>');
+      svgns_parts.push('<text x="'+x+'" y="'+(mt+plotH+18)+'" font-size="10" fill="var(--muted)" text-anchor="middle">'+t+'</text>');
+    }
+    bandOrder.forEach(function(h,i){
+      var y = mt + i*bandH;
+      svgns_parts.push('<line x1="'+ml+'" y1="'+y+'" x2="'+(ml+plotW)+'" y2="'+y+'" stroke="var(--faint-soft)" stroke-width="1"></line>');
+      svgns_parts.push('<text x="6" y="'+(y+bandH/2+4)+'" font-size="11" fill="'+HORIZONS[h].color+'" font-weight="600">'+h+'</text>');
+    });
+    svgns_parts.push('<text x="'+(ml+plotW)+'" y="'+(mt+plotH+18)+'" font-size="9" fill="var(--muted-soft)" text-anchor="end">TRL →</text>');
+
+    // bucket for jitter
+    var buckets = {};
+    ideas.forEach(function(o){
+      var key = o.horizon+"-"+o.trl;
+      buckets[key] = buckets[key] || [];
+      buckets[key].push(o);
+    });
+
+    Object.keys(buckets).forEach(function(key){
+      var arr = buckets[key];
+      arr.forEach(function(o, idx){
+        var bandIdx = bandOrder.indexOf(o.horizon);
+        var cx = ml + (o.trl-0.5)*colW + (idx-(arr.length-1)/2)*14;
+        var cy = mt + bandIdx*bandH + bandH/2;
+        var s = composite(o);
+        var r = 6 + (s/100)*11;
+        svgns_parts.push('<circle data-id="'+o.id+'" cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+HORIZONS[o.horizon].color+'" opacity="0.55" stroke="'+HORIZONS[o.horizon].color+'" stroke-width="1.5" style="cursor:pointer;"><title>'+escapeXml(o.title)+" — TRL "+o.trl+" — "+HORIZONS[o.horizon].label+" — score "+s+'</title></circle>');
+      });
+    });
+
+    svg.setAttribute("viewBox","0 0 "+W+" "+H);
+    svg.innerHTML = svgns_parts.join("");
+    svg.querySelectorAll("circle").forEach(function(c){
+      c.addEventListener("click", function(){ openModal(c.getAttribute("data-id")); });
+    });
+  }
+
+  function escapeXml(s){
+    return String(s==null?"":s).replace(/[<>&"]/g, function(c){
+      return {"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c];
+    });
+  }
+
+  function renderBoard(){
+    var board = document.getElementById("board");
+    board.innerHTML = "";
+    STAGES.forEach(function(name, i){
+      var col = el("div","col");
+      var items = ideas.filter(function(o){ return o.stage===i; });
+      col.innerHTML = '<div class="col-head"><span class="name">'+name+'</span><span class="count">'+items.length+'</span></div>';
+      items.forEach(function(o){
+        var s = composite(o);
+        var card = el("div","idea-card");
+        card.innerHTML =
+          '<div class="title">'+escapeXml(o.title)+'</div>'+
+          '<div class="tags"><span class="tag tag-'+o.horizon.toLowerCase()+'">'+o.horizon+'</span><span class="tag">'+o.type+'</span></div>'+
+          '<div class="trl-track">'+Array.from({length:9},function(_,k){return '<span class="trl-seg'+(k<o.trl?' on':'')+'"></span>';}).join('')+'</div>'+
+          '<div class="foot"><span class="score-pill '+scoreClass(s)+'">'+s+'</span></div>';
+        card.addEventListener("click", function(e){
+          if(e.target.tagName==="SELECT") return;
+          openModal(o.id);
+        });
+        var quickWrap = el("div");
+        quickWrap.style.marginTop="8px";
+        var sel = el("select","stage-quick");
+        STAGES.forEach(function(sn,si){ sel.innerHTML += '<option value="'+si+'"'+(si===o.stage?' selected':'')+'>'+sn+'</option>'; });
+        sel.addEventListener("change", function(){
+          o.stage = +sel.value; save(); renderAll();
+        });
+        quickWrap.appendChild(sel);
+        card.appendChild(quickWrap);
+        col.appendChild(card);
+      });
+      board.appendChild(col);
+    });
+  }
+
+  function renderShortlist(){
+    var wrap = document.getElementById("shortlist-wrap");
+    var threshold = +document.getElementById("threshold").value;
+    document.getElementById("threshold-val").textContent = threshold;
+    var list = ideas.map(function(o){ return {o:o, s:composite(o)}; })
+                    .filter(function(x){ return x.s>=threshold; })
+                    .sort(function(a,b){ return b.s-a.s; });
+    if(!list.length){
+      wrap.innerHTML = '<div class="empty-state"><div class="glyph">∅</div>No idea clears '+threshold+' right now — lower the gate or strengthen an idea\'s scoring.</div>';
+      return;
+    }
+    var rows = list.map(function(x,i){
+      var o = x.o, s = x.s;
+      return '<tr data-id="'+o.id+'" style="cursor:pointer;">'+
+        '<td class="rank mono">'+(i+1)+'</td>'+
+        '<td>'+escapeXml(o.title)+'</td>'+
+        '<td><span class="tag">'+o.type+'</span></td>'+
+        '<td><span class="tag tag-'+o.horizon.toLowerCase()+'">'+o.horizon+'</span></td>'+
+        '<td class="mono">TRL '+o.trl+'</td>'+
+        '<td class="mono">'+STAGES[o.stage]+'</td>'+
+        '<td><div class="bar-track"><div class="bar-fill" style="width:'+s+'%; background:'+scoreColor(s)+'"></div></div></td>'+
+        '<td class="mono" style="font-weight:600;">'+s+'</td>'+
+        '</tr>';
+    }).join("");
+    wrap.innerHTML =
+      '<table class="shortlist"><thead><tr><th>#</th><th>Idea</th><th>Type</th><th>Horizon</th><th>TRL</th><th>Stage</th><th>Score</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+    wrap.querySelectorAll("tr[data-id]").forEach(function(tr){
+      tr.addEventListener("click", function(){ openModal(tr.getAttribute("data-id")); });
+    });
+  }
+
+  function renderTrlTable(){
+    var t = document.getElementById("trl-table");
+    var rows = TRL_DEFS.map(function(def,i){
+      return '<tr><td class="n">'+(i+1)+'</td><td>'+def+'</td></tr>';
+    }).join("");
+    t.innerHTML = '<thead><tr><th>TRL</th><th>What it means here</th></tr></thead><tbody>'+rows+'</tbody>';
+  }
+
+  function renderAll(){
+    renderStats();
+    renderFunnel();
+    renderMatrix();
+    renderBoard();
+    renderShortlist();
+  }
+
+  /* ---------- modal ---------- */
+  function openModal(id){
+    editingId = id || null;
+    var o = id ? ideas.find(function(x){return x.id===id;}) : null;
+    document.getElementById("modal-title").textContent = o ? "Edit idea" : "New idea";
+    document.getElementById("btn-delete").style.display = o ? "inline-flex" : "none";
+    document.getElementById("f-title").value = o ? o.title : "";
+    document.getElementById("f-type").value = o ? o.type : "Product";
+    document.getElementById("f-problem").value = o ? o.problem : "";
+    document.getElementById("f-desc").value = o ? o.description : "";
+    document.querySelectorAll('input[name="horizon"]').forEach(function(r){ r.checked = (o?o.horizon:"H1")===r.value; });
+    document.getElementById("f-trl").value = o ? o.trl : 1;
+    document.getElementById("f-stage").value = o ? o.stage : 0;
+    document.getElementById("f-desirability").value = o ? o.desirability : 3;
+    document.getElementById("f-feasibility").value = o ? o.feasibility : 3;
+    document.getElementById("f-viability").value = o ? o.viability : 3;
+    document.getElementById("f-fit").value = o ? o.fit : 3;
+    document.getElementById("assist-out").value = "";
+    updateTrlLabel();
+    updateScoreLabels();
+    document.getElementById("overlay").classList.add("open");
+  }
+  function closeModal(){ document.getElementById("overlay").classList.remove("open"); editingId=null; }
+
+  function updateTrlLabel(){
+    var v = +document.getElementById("f-trl").value;
+    document.getElementById("trl-label").textContent = "TRL "+v;
+    document.getElementById("trl-def-live").textContent = TRL_DEFS[v-1];
+  }
+  function updateScoreLabels(){
+    ["desirability","feasibility","viability","fit"].forEach(function(k){
+      document.getElementById("v-"+k).textContent = document.getElementById("f-"+k).value;
+    });
+    var d=+document.getElementById("f-desirability").value, f=+document.getElementById("f-feasibility").value,
+        v=+document.getElementById("f-viability").value, s=+document.getElementById("f-fit").value;
+    document.getElementById("composite-val").textContent = Math.round((d+f+v+s)/20*100);
+  }
+
+  function saveFromModal(){
+    var title = document.getElementById("f-title").value.trim();
+    if(!title){ toast("Give the idea a title first."); return; }
+    var horizonEl = document.querySelector('input[name="horizon"]:checked');
+    var data = {
+      title: title,
+      type: document.getElementById("f-type").value,
+      horizon: horizonEl ? horizonEl.value : "H1",
+      problem: document.getElementById("f-problem").value.trim(),
+      description: document.getElementById("f-desc").value.trim(),
+      trl: +document.getElementById("f-trl").value,
+      stage: +document.getElementById("f-stage").value,
+      desirability: +document.getElementById("f-desirability").value,
+      feasibility: +document.getElementById("f-feasibility").value,
+      viability: +document.getElementById("f-viability").value,
+      fit: +document.getElementById("f-fit").value
+    };
+    if(editingId){
+      var idx = ideas.findIndex(function(x){return x.id===editingId;});
+      ideas[idx] = Object.assign(ideas[idx], data);
+      toast("Idea updated.");
+    }else{
+      data.id = uid(); data.createdAt = Date.now();
+      ideas.push(data);
+      toast("Idea added.");
+    }
+    save(); renderAll(); closeModal();
+  }
+
+  function deleteFromModal(){
+    if(!editingId) return;
+    ideas = ideas.filter(function(x){return x.id!==editingId;});
+    save(); renderAll(); closeModal();
+    toast("Idea deleted.");
+  }
+
+  /* ---------- clipboard ---------- */
+  function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ toast("Prompt copied."); }).catch(fallbackCopy);
+    }else{ fallbackCopy(); }
+    function fallbackCopy(){
+      var ta = document.getElementById("assist-out");
+      ta.focus(); ta.select();
+      try{ document.execCommand("copy"); toast("Prompt copied."); }
+      catch(e){ toast("Select the text above and copy manually."); }
+    }
+  }
+
+  /* ---------- downloads capability ---------- */
+  var downloadsApi = null;
+  (function initCapabilities(){
+    if(window.claude && typeof window.claude.use === "function"){
+      window.claude.use("downloads").then(function(ns){ downloadsApi = ns; }).catch(function(){ downloadsApi = null; });
+    }
+  })();
+
+  function exportBackup(){
+    var data = JSON.stringify(ideas, null, 2);
+    if(downloadsApi){
+      downloadsApi.save({filename:"horizon-funnel-backup.json", data:data}).then(function(){
+        toast("Backup saved.");
+      }).catch(function(err){
+        if(err && err.code==="declined"){ toast("Save cancelled."); }
+        else { manualExport(data); }
+      });
+    } else {
+      manualExport(data);
+    }
+  }
+  function manualExport(data){
+    var ta = document.getElementById("assist-out");
+    document.getElementById("overlay").classList.add("open");
+    document.getElementById("modal-title").textContent = "Backup JSON — copy manually";
+    ta.value = data;
+    toast("Downloads unavailable here — copy the JSON from the box.");
+  }
+
+  function importBackup(file){
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var incoming = JSON.parse(reader.result);
+        if(!Array.isArray(incoming)) throw new Error("not an array");
+        incoming.forEach(function(o){ o.id = uid(); });
+        ideas = ideas.concat(incoming);
+        save(); renderAll();
+        toast("Imported "+incoming.length+" idea"+(incoming.length===1?"":"s")+".");
+      }catch(e){
+        toast("That file doesn't look like a Horizon Funnel backup.");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  /* ---------- wire up ---------- */
+  document.getElementById("tabnav").addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-tab]");
+    if(!btn) return;
+    document.querySelectorAll("#tabnav button").forEach(function(b){ b.classList.remove("active"); });
+    btn.classList.add("active");
+    document.querySelectorAll(".tab-panel").forEach(function(p){ p.classList.remove("active"); });
+    document.getElementById("tab-"+btn.getAttribute("data-tab")).classList.add("active");
+  });
+
+  document.getElementById("btn-new").addEventListener("click", function(){ openModal(null); });
+  document.getElementById("modal-close").addEventListener("click", closeModal);
+  document.getElementById("btn-cancel").addEventListener("click", closeModal);
+  document.getElementById("overlay").addEventListener("click", function(e){ if(e.target.id==="overlay") closeModal(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeModal(); });
+  document.getElementById("btn-save").addEventListener("click", saveFromModal);
+  document.getElementById("btn-delete").addEventListener("click", deleteFromModal);
+  document.getElementById("f-trl").addEventListener("input", updateTrlLabel);
+  ["desirability","feasibility","viability","fit"].forEach(function(k){
+    document.getElementById("f-"+k).addEventListener("input", updateScoreLabels);
+  });
+  document.getElementById("btn-generate").addEventListener("click", function(){
+    var kind = document.getElementById("f-framework").value;
+    var out = tmpl(kind, document.getElementById("f-title").value, document.getElementById("f-type").value,
+                    document.getElementById("f-problem").value, document.getElementById("f-desc").value);
+    document.getElementById("assist-out").value = out;
+  });
+  document.getElementById("btn-copy").addEventListener("click", function(){
+    copyText(document.getElementById("assist-out").value);
+  });
+  document.getElementById("threshold").addEventListener("input", function(){ renderStats(); renderShortlist(); });
+  document.getElementById("btn-export").addEventListener("click", exportBackup);
+  document.getElementById("btn-import").addEventListener("click", function(){ document.getElementById("import-input").click(); });
+  document.getElementById("import-input").addEventListener("change", function(e){
+    if(e.target.files && e.target.files[0]) importBackup(e.target.files[0]);
+    e.target.value = "";
+  });
+
+  load();
+  renderTrlTable();
+  renderAll();
+})();
+</script>
