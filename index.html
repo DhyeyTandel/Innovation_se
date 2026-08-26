@@ -7,42 +7,40 @@
 <style>
   /* ============ tokens ============ */
   :root{
-    --paper:#F4F0E9; --paper-lift:#FCFAF6; --card:#FFFFFF;
-    --ink:#17140F; --ink-soft:#2B2620; --body-color:#4B443A; --muted:#7C7367; --muted-soft:#A89E90;
-    --faint:#E6DFD2; --faint-soft:#EFEAE0;
-    --accent:#EE5308; --accent-deep:#C24303; --accent-soft:#FBE6D9;
-    --blurple:#5B4DF2; --blurple-soft:#E7E4FD;
-    --magenta:#DE3D9E; --magenta-soft:#FBE2F1;
-    --ink-surface:#17140F; --on-ink:#F4F0E9; --on-ink-muted:#A89E90;
-    --success:#1E8A5A; --success-soft:#DEF0E6; --error:#D0342C; --error-soft:#FBE1DF;
+    --paper:#EEECE5; --paper-lift:#F6F4EE; --card:#FFFFFF;
+    --ink:#181A1B; --ink-soft:#2C2E2E; --body-color:#4A4C4A; --muted:#797C79; --muted-soft:#A7A9A4;
+    --faint:#DCD9D0; --faint-soft:#E8E5DC;
+    --accent:#A6541E; --accent-deep:#7E3E12; --accent-soft:#F1E4D8;
+    --ink-surface:#181A1B; --on-ink:#EEECE5; --on-ink-muted:#9B9C97;
+    --success:#1E7A4C; --success-soft:#DCEEE2; --error:#B0392F; --error-soft:#F5E0DC;
 
-    --r-card:4px; --r-input:8px; --r-media:24px; --r-pill:999px;
-    --shadow-soft:0 4px 24px rgba(23,20,15,.05);
-    --shadow-halo:0 2px 4px rgba(23,20,15,.04),0 24px 48px rgba(23,20,15,.08);
-    --shadow-lift:0 8px 16px rgba(23,20,15,.06),0 32px 64px rgba(23,20,15,.12);
+    --r-card:3px; --r-input:6px; --r-chip:4px; --r-media:16px; --r-pill:999px;
+    --shadow-soft:0 2px 10px rgba(24,26,27,.05);
+    --shadow-halo:0 1px 3px rgba(24,26,27,.04),0 16px 32px rgba(24,26,27,.06);
+    --shadow-lift:0 4px 10px rgba(24,26,27,.06),0 20px 40px rgba(24,26,27,.09);
 
-    --ease-spring:cubic-bezier(.34,1.56,.64,1); --ease-swift:cubic-bezier(.2,.7,.2,1);
-    --dur-fast:.18s; --dur:.32s;
+    --ease-spring:cubic-bezier(.3,1.2,.5,1); --ease-swift:cubic-bezier(.2,.7,.2,1);
+    --dur-fast:.15s; --dur:.24s;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --paper:#17140F; --paper-lift:#1E1912; --card:#201B13; --ink:#F4F0E9;
-      --ink-soft:#EFEAE0; --body-color:#C9C0B2; --muted:#A89E90; --muted-soft:#6E6455;
-      --faint:#332D23; --faint-soft:#2A2519; --accent-soft:#3A2313; --accent-deep:#FF8A4D;
-      --blurple-soft:#242046; --magenta-soft:#3A1C2E; --ink-surface:#0F0C08;
-      --success-soft:#173327; --error-soft:#3A1E1B;
-      --shadow-soft:0 4px 24px rgba(0,0,0,.25); --shadow-halo:0 2px 4px rgba(0,0,0,.3),0 24px 48px rgba(0,0,0,.35);
-      --shadow-lift:0 8px 16px rgba(0,0,0,.3),0 32px 64px rgba(0,0,0,.4);
+      --paper:#15171A; --paper-lift:#1B1D1F; --card:#1E2022; --ink:#EDEBE4;
+      --ink-soft:#DEDCD3; --body-color:#B6B4AC; --muted:#8B8D89; --muted-soft:#5C5E5A;
+      --faint:#2C2E2F; --faint-soft:#242628; --accent-soft:#2C1E13; --accent-deep:#DC8244;
+      --ink-surface:#0E0F10; --on-ink:#EDEBE4; --on-ink-muted:#8B8D89;
+      --success-soft:#12301F; --error-soft:#331E1A;
+      --shadow-soft:0 2px 10px rgba(0,0,0,.3); --shadow-halo:0 1px 3px rgba(0,0,0,.3),0 16px 32px rgba(0,0,0,.35);
+      --shadow-lift:0 4px 10px rgba(0,0,0,.35),0 20px 40px rgba(0,0,0,.4);
     }
   }
   :root[data-theme="dark"]{
-    --paper:#17140F; --paper-lift:#1E1912; --card:#201B13; --ink:#F4F0E9;
-    --ink-soft:#EFEAE0; --body-color:#C9C0B2; --muted:#A89E90; --muted-soft:#6E6455;
-    --faint:#332D23; --faint-soft:#2A2519; --accent-soft:#3A2313; --accent-deep:#FF8A4D;
-    --blurple-soft:#242046; --magenta-soft:#3A1C2E; --ink-surface:#0F0C08;
-    --success-soft:#173327; --error-soft:#3A1E1B;
-    --shadow-soft:0 4px 24px rgba(0,0,0,.25); --shadow-halo:0 2px 4px rgba(0,0,0,.3),0 24px 48px rgba(0,0,0,.35);
-    --shadow-lift:0 8px 16px rgba(0,0,0,.3),0 32px 64px rgba(0,0,0,.4);
+    --paper:#15171A; --paper-lift:#1B1D1F; --card:#1E2022; --ink:#EDEBE4;
+    --ink-soft:#DEDCD3; --body-color:#B6B4AC; --muted:#8B8D89; --muted-soft:#5C5E5A;
+    --faint:#2C2E2F; --faint-soft:#242628; --accent-soft:#2C1E13; --accent-deep:#DC8244;
+    --ink-surface:#0E0F10; --on-ink:#EDEBE4; --on-ink-muted:#8B8D89;
+    --success-soft:#12301F; --error-soft:#331E1A;
+    --shadow-soft:0 2px 10px rgba(0,0,0,.3); --shadow-halo:0 1px 3px rgba(0,0,0,.3),0 16px 32px rgba(0,0,0,.35);
+    --shadow-lift:0 4px 10px rgba(0,0,0,.35),0 20px 40px rgba(0,0,0,.4);
   }
 
   *{box-sizing:border-box;}
@@ -52,8 +50,8 @@
     font-family:'Sofia Sans',system-ui,-apple-system,sans-serif; font-weight:450; font-size:16.5px; line-height:1.6;
     -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3{font-family:'Newsreader',Georgia,serif; font-weight:400; color:var(--ink); letter-spacing:-0.02em; text-wrap:balance; margin:0;}
-  em{font-style:italic; color:var(--accent);}
+  h2,h3{font-family:'Newsreader',Georgia,serif; font-weight:400; color:var(--ink); letter-spacing:-0.01em; text-wrap:balance; margin:0;}
+  em{font-style:italic;}
   .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
   a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--faint); text-underline-offset:3px;}
   a:hover{color:var(--accent); text-decoration-color:var(--accent);}
@@ -61,34 +59,29 @@
   :focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
   ::selection{background:var(--accent-soft); color:var(--ink);}
 
-  .eyebrow{
-    font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.14em;
-    text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:8px;
-  }
-  .eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none;}
-
   .wrap{max-width:1160px; margin:0 auto; padding:0 24px;}
 
   /* ============ header ============ */
   header.top{
-    position:sticky; top:0; z-index:30; background:color-mix(in srgb, var(--paper) 92%, transparent);
+    position:sticky; top:0; z-index:30; background:color-mix(in srgb, var(--paper) 94%, transparent);
     backdrop-filter:blur(10px); border-bottom:1px solid var(--faint);
   }
-  .top-inner{display:flex; align-items:center; gap:28px; padding:16px 24px; max-width:1160px; margin:0 auto; flex-wrap:wrap;}
-  .brand{display:flex; align-items:baseline; gap:10px; flex:none;}
-  .brand h1{font-size:24px;}
-  .brand .mono{font-size:10.5px; color:var(--muted-soft);}
-  nav.tabs{display:flex; gap:4px; flex:1; min-width:240px;}
+  .top-inner{display:flex; align-items:center; justify-content:space-between; gap:20px; padding:15px 24px; max-width:1160px; margin:0 auto; flex-wrap:wrap;}
+  .wordmark{
+    font-family:'JetBrains Mono',monospace; font-weight:600; font-size:14px; letter-spacing:.03em;
+    color:var(--ink); text-transform:uppercase;
+  }
+  nav.tabs{display:flex; gap:22px; max-width:1160px; margin:0 auto; padding:0 24px; border-top:1px solid var(--faint);}
   nav.tabs button{
-    background:none; border:none; padding:8px 14px; border-radius:var(--r-pill);
-    font-family:'Sofia Sans',sans-serif; font-weight:560; font-size:14.5px; color:var(--muted);
-    transition:background var(--dur-fast) var(--ease-swift), color var(--dur-fast) var(--ease-swift);
+    background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px;
+    padding:10px 2px; font-family:'Sofia Sans',sans-serif; font-weight:560; font-size:14px; color:var(--muted);
+    transition:color var(--dur-fast) var(--ease-swift), border-color var(--dur-fast) var(--ease-swift);
   }
   nav.tabs button:hover{color:var(--ink);}
-  nav.tabs button.active{background:var(--ink-surface); color:var(--on-ink);}
+  nav.tabs button.active{color:var(--ink); border-bottom-color:var(--accent);}
   .btn{
-    display:inline-flex; align-items:center; gap:7px; border-radius:var(--r-pill); border:1px solid transparent;
-    padding:9px 18px; font-weight:600; font-size:14.5px; transition:transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast);
+    display:inline-flex; align-items:center; gap:7px; border-radius:var(--r-input); border:1px solid transparent;
+    padding:8px 16px; font-weight:600; font-size:14px; transition:transform var(--dur-fast) var(--ease-swift), box-shadow var(--dur-fast);
   }
   .btn:active{transform:scale(.97);}
   .btn-primary{background:var(--accent); color:#fff;}
@@ -138,23 +131,23 @@
   .col{background:var(--paper-lift); border:1px solid var(--faint); border-radius:var(--r-card); padding:12px; min-height:120px;}
   .col-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; padding:0 2px;}
   .col-head .name{font-weight:600; color:var(--ink-soft); font-size:14.5px;}
-  .col-head .count{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted); background:var(--faint-soft); padding:1px 8px; border-radius:99px;}
+  .col-head .count{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted); background:var(--faint-soft); padding:1px 8px; border-radius:var(--r-chip);}
   .idea-card{
     background:var(--card); border:1px solid var(--faint); border-radius:var(--r-card); padding:12px 13px; margin-bottom:10px;
     cursor:pointer; transition:transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast);
   }
   .idea-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-lift);}
   .idea-card .title{font-weight:600; color:var(--ink); font-size:14.5px; margin-bottom:6px;}
-  .idea-card .tags{display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;}
-  .tag{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.04em; text-transform:uppercase; padding:2px 7px; border-radius:5px; border:1px solid var(--faint); color:var(--muted);}
-  .tag-h1{background:var(--accent-soft); color:var(--accent-deep); border-color:transparent;}
-  .tag-h2{background:var(--blurple-soft); color:var(--blurple); border-color:transparent;}
-  .tag-h3{background:var(--magenta-soft); color:var(--magenta); border-color:transparent;}
+  .idea-card .tags{display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin-bottom:8px;}
+  .tag{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.04em; text-transform:uppercase; padding:2px 7px; border-radius:var(--r-chip); border:1px solid var(--faint); color:var(--muted); display:inline-flex; align-items:center; gap:5px;}
+  .horizon-mark{display:inline-flex; gap:2px;}
+  .horizon-mark i{display:block; width:4px; height:4px; border-radius:1px; background:var(--faint-soft); font-style:normal;}
+  .horizon-mark i.on{background:var(--accent);}
   .trl-track{display:flex; gap:2px; margin-bottom:8px;}
-  .trl-seg{flex:1; height:4px; border-radius:2px; background:var(--faint);}
+  .trl-seg{flex:1; height:4px; border-radius:1px; background:var(--faint);}
   .trl-seg.on{background:var(--ink-soft);}
   .idea-card .foot{display:flex; align-items:center; justify-content:space-between; gap:8px;}
-  .score-pill{font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:600; padding:2px 8px; border-radius:99px;}
+  .score-pill{font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:600; padding:2px 8px; border-radius:var(--r-chip);}
   .score-hi{background:var(--success-soft); color:var(--success);}
   .score-mid{background:var(--faint-soft); color:var(--ink-soft);}
   .score-lo{background:var(--error-soft); color:var(--error);}
@@ -177,15 +170,13 @@
   .empty-state .glyph{font-size:34px; margin-bottom:10px; color:var(--muted-soft);}
 
   /* ============ playbook ============ */
+  .playbook-h3{font-size:13px; font-weight:600; font-family:'Sofia Sans',sans-serif; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:4px;}
   .playbook-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:32px;}
   @media (max-width:760px){ .playbook-grid{grid-template-columns:1fr;} }
-  .horizon-card{border-radius:var(--r-card); padding:18px; border:1px solid var(--faint);}
-  .horizon-card h4{font-family:'Newsreader',serif; font-size:19px; font-weight:500; margin-bottom:6px;}
-  .horizon-card p{font-size:13.5px; margin:0 0 8px;}
-  .horizon-card .meta{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);}
-  .h1card{background:var(--accent-soft);} .h1card h4{color:var(--accent-deep);}
-  .h2card{background:var(--blurple-soft);} .h2card h4{color:var(--blurple);}
-  .h3card{background:var(--magenta-soft);} .h3card h4{color:var(--magenta);}
+  .horizon-card{border-radius:var(--r-card); padding:16px 18px; border:1px solid var(--faint); background:var(--card);}
+  .horizon-card h4{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;}
+  .horizon-card p{font-size:13.5px; margin:0 0 10px;}
+  .horizon-card .meta{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); padding-top:10px; border-top:1px solid var(--faint-soft);}
 
   table.trl-table{width:100%; border-collapse:collapse; font-size:13.5px; margin-bottom:32px;}
   table.trl-table th{text-align:left; font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-soft); padding:0 10px 8px; border-bottom:1px solid var(--faint);}
@@ -223,14 +214,11 @@
   @media (max-width:520px){ .field-row{grid-template-columns:1fr;} }
   .pill-radio{display:flex; gap:8px; flex-wrap:wrap;}
   .pill-radio label{
-    font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:6px 12px; border-radius:99px; border:1px solid var(--faint);
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:6px 12px; border-radius:var(--r-chip); border:1px solid var(--faint);
     color:var(--muted); cursor:pointer; transition:all var(--dur-fast);
   }
   .pill-radio input{display:none;}
-  .pill-radio input:checked + span{}
-  .pill-radio label:has(input:checked).h1{background:var(--accent-soft); color:var(--accent-deep); border-color:transparent;}
-  .pill-radio label:has(input:checked).h2{background:var(--blurple-soft); color:var(--blurple); border-color:transparent;}
-  .pill-radio label:has(input:checked).h3{background:var(--magenta-soft); color:var(--magenta); border-color:transparent;}
+  .pill-radio label:has(input:checked){background:var(--ink-surface); color:var(--on-ink); border-color:transparent;}
   .trl-def{font-size:12.5px; color:var(--muted); margin-top:6px; background:var(--paper-lift); border:1px solid var(--faint-soft); border-radius:8px; padding:8px 10px;}
   input[type=range]{width:100%; accent-color:var(--accent);}
   .score-row{display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px; margin-bottom:4px;}
@@ -259,18 +247,15 @@
 
 <header class="top">
   <div class="top-inner">
-    <div class="brand">
-      <h1>Horizon <em>Funnel</em></h1>
-      <span class="mono">v1</span>
-    </div>
-    <nav class="tabs" id="tabnav">
-      <button data-tab="overview" class="active">Overview</button>
-      <button data-tab="board">Board</button>
-      <button data-tab="shortlist">Shortlist</button>
-      <button data-tab="playbook">Playbook</button>
-    </nav>
+    <span class="wordmark">Horizon Funnel</span>
     <button class="btn btn-primary" id="btn-new">+ New idea</button>
   </div>
+  <nav class="tabs" id="tabnav">
+    <button data-tab="overview" class="active">Overview</button>
+    <button data-tab="board">Board</button>
+    <button data-tab="shortlist">Shortlist</button>
+    <button data-tab="playbook">Playbook</button>
+  </nav>
 </header>
 
 <main class="wrap">
@@ -279,26 +264,24 @@
   <section class="tab-panel active" id="tab-overview">
     <div class="section-head">
       <div>
-        <span class="eyebrow">Systematic innovation workbench</span>
-        <h2 style="margin-top:6px;">Capture → classify → fund</h2>
-        <p>Every idea gets a horizon, a readiness level, and a funnel score — so the portfolio, not just the loudest idea, decides what gets built next.</p>
+        <h2>Overview</h2>
       </div>
     </div>
     <div class="stat-row" id="stat-row"></div>
     <div class="chart-grid">
       <div class="panel">
         <h3>Funnel</h3>
-        <div class="hint">Ideas by stage-gate. Width = share of live ideas at that gate.</div>
+        <div class="hint">Idea count per stage.</div>
         <div class="scroller"><svg id="funnel-svg" viewBox="0 0 560 330" style="width:100%; height:auto; min-width:420px;"></svg></div>
       </div>
       <div class="panel">
-        <h3>Horizon × TRL matrix</h3>
-        <div class="hint">Bubble size = funnel score. Click a bubble to open it.</div>
+        <h3>Horizon × TRL</h3>
+        <div class="hint">Size = score. Click to open.</div>
         <div class="scroller"><svg id="matrix-svg" viewBox="0 0 560 300" style="width:100%; height:auto; min-width:420px;"></svg></div>
         <div class="legend">
-          <div class="legend-item"><span class="legend-dot" style="background:var(--magenta)"></span>H3 · transformational</div>
-          <div class="legend-item"><span class="legend-dot" style="background:var(--blurple)"></span>H2 · adjacent</div>
-          <div class="legend-item"><span class="legend-dot" style="background:var(--accent)"></span>H1 · core</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--accent); opacity:.9"></span>H1 · near-term</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--accent); opacity:.5"></span>H2 · adjacent</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--accent); opacity:.22"></span>H3 · future bet</div>
         </div>
       </div>
     </div>
@@ -308,8 +291,7 @@
   <section class="tab-panel" id="tab-board">
     <div class="section-head">
       <div>
-        <h2>Stage-gate board</h2>
-        <p>Discover → Define → Develop → Validate → Scale. Move an idea with the quick-select, or open it to re-score.</p>
+        <h2>Board</h2>
       </div>
     </div>
     <div class="board" id="board"></div>
@@ -320,11 +302,10 @@
     <div class="section-head">
       <div>
         <h2>Shortlist</h2>
-        <p>The funnel gate: only ideas scoring at or above the threshold survive to get resourced.</p>
       </div>
     </div>
     <div class="threshold-row">
-      <label class="mono" style="font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-soft);">Gate threshold</label>
+      <label class="mono" style="font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-soft);">Threshold</label>
       <input type="range" id="threshold" min="0" max="100" step="5" value="70">
       <span class="mono" id="threshold-val" style="font-weight:600; color:var(--ink);">70</span>
     </div>
@@ -336,59 +317,58 @@
     <div class="section-head">
       <div>
         <h2>Playbook</h2>
-        <p>The frameworks this tool runs on, in one place.</p>
       </div>
     </div>
 
-    <span class="eyebrow" style="margin-bottom:10px;">Horizons — where an idea sits on the growth curve</span>
+    <h3 class="playbook-h3">Horizons</h3>
     <div class="playbook-grid" style="margin-top:12px;">
-      <div class="horizon-card h1card">
+      <div class="horizon-card">
         <h4>H1 · Core</h4>
         <p>Extends and defends what already earns. Incremental, funds itself.</p>
         <div class="meta">0–12 months · ~70% of portfolio</div>
       </div>
-      <div class="horizon-card h2card">
+      <div class="horizon-card">
         <h4>H2 · Adjacent</h4>
-        <p>A new segment, channel, or meaningful redesign next to the core.</p>
+        <p>A new segment, channel, or redesign next to the core.</p>
         <div class="meta">1–3 years · ~20% of portfolio</div>
       </div>
-      <div class="horizon-card h3card">
+      <div class="horizon-card">
         <h4>H3 · Transformational</h4>
-        <p>Options on a future that doesn't exist yet. High uncertainty, small bets.</p>
+        <p>An option on a future that doesn't exist yet. Small bet, high uncertainty.</p>
         <div class="meta">3+ years · ~10% of portfolio</div>
       </div>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-top:-18px; margin-bottom:32px;">Adapted from McKinsey's Three Horizons of Growth (Baghai, Coley &amp; White, <em style="color:inherit; font-style:italic;">The Alchemy of Growth</em>, 1999).</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:-18px; margin-bottom:32px;">McKinsey's Three Horizons of Growth (Baghai, Coley &amp; White, <em>The Alchemy of Growth</em>, 1999).</p>
 
-    <span class="eyebrow" style="margin-bottom:10px;">Readiness scale — how proven an idea is, 1–9</span>
+    <h3 class="playbook-h3">Readiness scale (1–9)</h3>
     <table class="trl-table" id="trl-table" style="margin-top:12px;"></table>
-    <p style="font-size:13px; color:var(--muted); margin-top:-18px; margin-bottom:32px;">Adapted from NASA/DoD Technology Readiness Levels — originally hardware-only, generalized here to cover processes and services too.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:-18px; margin-bottom:32px;">Adapted from NASA/DoD Technology Readiness Levels — hardware-only in the original, generalized here for processes and services.</p>
 
-    <span class="eyebrow" style="margin-bottom:10px;">Funneling techniques used here</span>
+    <h3 class="playbook-h3">Funneling techniques</h3>
     <div class="method-list" style="margin-top:14px;">
       <div class="method-item">
         <div class="name">Stage-gate</div>
-        <p>The five Board columns are checkpoints, not status labels — an idea needs a deliberate decision to cross each gate, not just time passing.</p>
+        <p>The five Board columns are checkpoints. Moving an idea across one is a decision, not a status update.</p>
       </div>
       <div class="method-item">
         <div class="name">Weighted scoring</div>
-        <p>Desirability, feasibility, viability (IDEO's three lenses) plus strategic fit, averaged into one 0–100 funnel score per idea.</p>
+        <p>Desirability, feasibility, viability (IDEO), plus strategic fit — averaged into one 0–100 score per idea.</p>
       </div>
       <div class="method-item">
         <div class="name">Horizon × TRL matrix</div>
-        <p>A portfolio-level funnel: it exposes a pipeline stuffed with unproven H1 bets, or a total absence of H3 options, at a glance.</p>
+        <p>Shows whether the pipeline is stacked with safe, low-TRL H1 bets or missing H3 options entirely.</p>
       </div>
       <div class="method-item">
         <div class="name">Threshold gate</div>
-        <p>The Shortlist tab applies a single cutoff score — raise it to force-rank harder, lower it to keep more options alive longer.</p>
+        <p>One cutoff score on the Shortlist tab. Raise it to force-rank harder, lower it to keep more ideas alive.</p>
       </div>
       <div class="method-item">
         <div class="name">Divergent techniques</div>
-        <p>SCAMPER, TRIZ contradiction analysis, Jobs-to-be-Done, first-principles, and analogical transfer feed the top of the funnel — see Ideation assist inside any idea.</p>
+        <p>SCAMPER, TRIZ, Jobs-to-be-Done, first-principles, analogical transfer — inside Ideation assist on any idea.</p>
       </div>
     </div>
 
-    <span class="eyebrow" style="margin-bottom:10px;">Courses this drew on</span>
+    <h3 class="playbook-h3">Courses referenced</h3>
     <div class="course-list" style="margin-top:14px; margin-bottom:10px;">
       <div class="course-item">
         <div class="school">MIT Sloan Executive Education</div>
@@ -417,7 +397,7 @@
 
 <footer>
   <div class="wrap footer-row">
-    <span>Data lives only in this browser (localStorage) — nothing is sent anywhere.</span>
+    <span>Stored locally in this browser. Nothing is sent to a server.</span>
     <div class="footer-actions">
       <button class="btn-text" id="btn-export">Export backup</button>
       <button class="btn-text" id="btn-import">Import backup</button>
@@ -436,7 +416,7 @@
     <div class="modal-body">
       <div class="field">
         <label for="f-title">Title</label>
-        <input type="text" id="f-title" placeholder="Name the idea in one line">
+        <input type="text" id="f-title" placeholder="Idea title">
       </div>
       <div class="field-row">
         <div class="field">
@@ -450,15 +430,15 @@
         <div class="field">
           <label>Horizon</label>
           <div class="pill-radio">
-            <label class="h1"><input type="radio" name="horizon" value="H1"><span>H1 core</span></label>
-            <label class="h2"><input type="radio" name="horizon" value="H2"><span>H2 adjacent</span></label>
-            <label class="h3"><input type="radio" name="horizon" value="H3"><span>H3 future</span></label>
+            <label><input type="radio" name="horizon" value="H1"><span>H1</span></label>
+            <label><input type="radio" name="horizon" value="H2"><span>H2</span></label>
+            <label><input type="radio" name="horizon" value="H3"><span>H3</span></label>
           </div>
         </div>
       </div>
       <div class="field">
-        <label for="f-problem">Problem / opportunity</label>
-        <textarea id="f-problem" placeholder="What gap, friction, or unmet need does this address?"></textarea>
+        <label for="f-problem">Problem or opportunity</label>
+        <textarea id="f-problem" placeholder="What gap or unmet need does this address?"></textarea>
       </div>
       <div class="field">
         <label for="f-desc">Description</label>
@@ -468,7 +448,7 @@
       <fieldset>
         <legend>Ideation assist</legend>
         <div class="assist-row">
-          <select id="f-framework" style="flex:1; min-width:160px; border:1px solid var(--faint); border-radius:8px; padding:8px 10px; background:var(--paper-lift); font-family:inherit; font-size:13.5px;">
+          <select id="f-framework" style="flex:1; min-width:160px; border:1px solid var(--faint); border-radius:6px; padding:8px 10px; background:var(--paper-lift); font-family:inherit; font-size:13.5px;">
             <option value="scamper">SCAMPER</option>
             <option value="triz">TRIZ contradiction</option>
             <option value="jtbd">Jobs-to-be-Done</option>
@@ -478,7 +458,7 @@
           <button class="btn btn-ghost" id="btn-generate" type="button">Generate prompt</button>
           <button class="btn btn-ghost" id="btn-copy" type="button">Copy</button>
         </div>
-        <textarea class="assist-out" id="assist-out" readonly placeholder="Fill in a title + problem above, pick a framework, then Generate. Paste the result into Claude, ChatGPT, or any GenAI tool."></textarea>
+        <textarea class="assist-out" id="assist-out" readonly placeholder="Pick a framework, generate, then paste into your GenAI tool."></textarea>
       </fieldset>
 
       <fieldset>
@@ -500,14 +480,14 @@
       </fieldset>
 
       <fieldset>
-        <legend>Funnel score inputs (0–5 each)</legend>
-        <div class="score-row"><label style="font-size:13px;">Desirability — do people want it?</label><span class="n" id="v-desirability">3</span></div>
+        <legend>Score inputs (0–5 each)</legend>
+        <div class="score-row"><label style="font-size:13px;">Desirability</label><span class="n" id="v-desirability">3</span></div>
         <input type="range" id="f-desirability" min="0" max="5" step="1" value="3">
-        <div class="score-row" style="margin-top:10px;"><label style="font-size:13px;">Feasibility — can we build it?</label><span class="n" id="v-feasibility">3</span></div>
+        <div class="score-row" style="margin-top:10px;"><label style="font-size:13px;">Feasibility</label><span class="n" id="v-feasibility">3</span></div>
         <input type="range" id="f-feasibility" min="0" max="5" step="1" value="3">
-        <div class="score-row" style="margin-top:10px;"><label style="font-size:13px;">Viability — does it pay for itself?</label><span class="n" id="v-viability">3</span></div>
+        <div class="score-row" style="margin-top:10px;"><label style="font-size:13px;">Viability</label><span class="n" id="v-viability">3</span></div>
         <input type="range" id="f-viability" min="0" max="5" step="1" value="3">
-        <div class="score-row" style="margin-top:10px;"><label style="font-size:13px;">Strategic fit — does it belong here?</label><span class="n" id="v-fit">3</span></div>
+        <div class="score-row" style="margin-top:10px;"><label style="font-size:13px;">Strategic fit</label><span class="n" id="v-fit">3</span></div>
         <input type="range" id="f-fit" min="0" max="5" step="1" value="3">
         <div class="composite-readout">
           <span class="lbl">Funnel score</span>
@@ -533,10 +513,16 @@
 
   var STAGES = ["Discover","Define","Develop","Validate","Scale"];
   var HORIZONS = {
-    H1:{label:"H1 core", color:"var(--accent)", soft:"var(--accent-soft)", deep:"var(--accent-deep)"},
-    H2:{label:"H2 adjacent", color:"var(--blurple)", soft:"var(--blurple-soft)", deep:"var(--blurple)"},
-    H3:{label:"H3 future", color:"var(--magenta)", soft:"var(--magenta-soft)", deep:"var(--magenta)"}
+    H1:{label:"H1 · near-term", marks:3, opacity:0.9},
+    H2:{label:"H2 · adjacent", marks:2, opacity:0.5},
+    H3:{label:"H3 · future bet", marks:1, opacity:0.22}
   };
+  function horizonMark(h){
+    var m = HORIZONS[h].marks;
+    var out = '<span class="horizon-mark">';
+    for(var i=0;i<3;i++){ out += '<i class="'+(i<m?'on':'')+'"></i>'; }
+    return out+'</span>';
+  }
   var TRL_DEFS = [
     "Observed — a problem, gap, or opportunity has been noticed and named. No solution exists yet.",
     "Concept — a solution concept is sketched and a hypothesis stated, but untested.",
@@ -676,9 +662,9 @@
     var mix = el("div","horizon-mix");
     var t = total||1;
     mix.innerHTML =
-      '<span style="width:'+(h1/t*100)+'%; background:var(--accent)"></span>'+
-      '<span style="width:'+(h2/t*100)+'%; background:var(--blurple)"></span>'+
-      '<span style="width:'+(h3/t*100)+'%; background:var(--magenta)"></span>';
+      '<span style="width:'+(h1/t*100)+'%; background:var(--accent); opacity:.9"></span>'+
+      '<span style="width:'+(h2/t*100)+'%; background:var(--accent); opacity:.5"></span>'+
+      '<span style="width:'+(h3/t*100)+'%; background:var(--accent); opacity:.22"></span>';
     mixCard.appendChild(mix);
     row.appendChild(mixCard);
   }
@@ -698,10 +684,10 @@
       var y1 = y0 + rowH;
       var xTop0 = (W-wTop)/2, xTop1 = xTop0+wTop;
       var xBot0 = (W-wBot)/2, xBot1 = xBot0+wBot;
-      var fill = i===0?"var(--accent)":(i<3?"var(--ink-soft)":"var(--success)");
+      var op = (0.32 + i*0.14).toFixed(2);
       var pct = Math.round(counts[i]/totalLive*100);
       parts.push(
-        '<polygon points="'+xTop0+','+y0+' '+xTop1+','+y0+' '+xBot1+','+y1+' '+xBot0+','+y1+'" fill="'+fill+'" opacity="0.88"></polygon>'+
+        '<polygon points="'+xTop0+','+y0+' '+xTop1+','+y0+' '+xBot1+','+y1+' '+xBot0+','+y1+'" fill="var(--accent)" opacity="'+op+'"></polygon>'+
         '<text x="12" y="'+(y0+rowH/2-6)+'" font-size="12" font-weight="600" fill="var(--ink)">'+name+'</text>'+
         '<text x="12" y="'+(y0+rowH/2+12)+'" font-size="10" fill="var(--muted)">'+counts[i]+' idea'+(counts[i]===1?"":"s")+' · '+pct+'% of pipeline</text>'
       );
@@ -728,7 +714,7 @@
     bandOrder.forEach(function(h,i){
       var y = mt + i*bandH;
       svgns_parts.push('<line x1="'+ml+'" y1="'+y+'" x2="'+(ml+plotW)+'" y2="'+y+'" stroke="var(--faint-soft)" stroke-width="1"></line>');
-      svgns_parts.push('<text x="6" y="'+(y+bandH/2+4)+'" font-size="11" fill="'+HORIZONS[h].color+'" font-weight="600">'+h+'</text>');
+      svgns_parts.push('<text x="6" y="'+(y+bandH/2+4)+'" font-size="11" fill="var(--muted)" font-weight="600">'+h+'</text>');
     });
     svgns_parts.push('<text x="'+(ml+plotW)+'" y="'+(mt+plotH+18)+'" font-size="9" fill="var(--muted-soft)" text-anchor="end">TRL →</text>');
 
@@ -748,7 +734,8 @@
         var cy = mt + bandIdx*bandH + bandH/2;
         var s = composite(o);
         var r = 6 + (s/100)*11;
-        svgns_parts.push('<circle data-id="'+o.id+'" cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+HORIZONS[o.horizon].color+'" opacity="0.55" stroke="'+HORIZONS[o.horizon].color+'" stroke-width="1.5" style="cursor:pointer;"><title>'+escapeXml(o.title)+" — TRL "+o.trl+" — "+HORIZONS[o.horizon].label+" — score "+s+'</title></circle>');
+        var op = HORIZONS[o.horizon].opacity;
+        svgns_parts.push('<circle data-id="'+o.id+'" cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="var(--accent)" fill-opacity="'+op+'" stroke="var(--accent)" stroke-width="1.5" style="cursor:pointer;"><title>'+escapeXml(o.title)+" — TRL "+o.trl+" — "+HORIZONS[o.horizon].label+" — score "+s+'</title></circle>');
       });
     });
 
@@ -777,7 +764,7 @@
         var card = el("div","idea-card");
         card.innerHTML =
           '<div class="title">'+escapeXml(o.title)+'</div>'+
-          '<div class="tags"><span class="tag tag-'+o.horizon.toLowerCase()+'">'+o.horizon+'</span><span class="tag">'+o.type+'</span></div>'+
+          '<div class="tags"><span class="tag">'+horizonMark(o.horizon)+o.horizon+'</span><span class="tag">'+o.type+'</span></div>'+
           '<div class="trl-track">'+Array.from({length:9},function(_,k){return '<span class="trl-seg'+(k<o.trl?' on':'')+'"></span>';}).join('')+'</div>'+
           '<div class="foot"><span class="score-pill '+scoreClass(s)+'">'+s+'</span></div>';
         card.addEventListener("click", function(e){
@@ -807,7 +794,7 @@
                     .filter(function(x){ return x.s>=threshold; })
                     .sort(function(a,b){ return b.s-a.s; });
     if(!list.length){
-      wrap.innerHTML = '<div class="empty-state"><div class="glyph">∅</div>No idea clears '+threshold+' right now — lower the gate or strengthen an idea\'s scoring.</div>';
+      wrap.innerHTML = '<div class="empty-state"><div class="glyph">∅</div>Nothing scores '+threshold+' or above yet.</div>';
       return;
     }
     var rows = list.map(function(x,i){
@@ -816,7 +803,7 @@
         '<td class="rank mono">'+(i+1)+'</td>'+
         '<td>'+escapeXml(o.title)+'</td>'+
         '<td><span class="tag">'+o.type+'</span></td>'+
-        '<td><span class="tag tag-'+o.horizon.toLowerCase()+'">'+o.horizon+'</span></td>'+
+        '<td><span class="tag">'+horizonMark(o.horizon)+o.horizon+'</span></td>'+
         '<td class="mono">TRL '+o.trl+'</td>'+
         '<td class="mono">'+STAGES[o.stage]+'</td>'+
         '<td><div class="bar-track"><div class="bar-fill" style="width:'+s+'%; background:'+scoreColor(s)+'"></div></div></td>'+
