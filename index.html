@@ -1,4 +1,5 @@
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Horizon Funnel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -7,38 +8,40 @@
 <style>
   /* ============ tokens ============ */
   :root{
-    --paper:#EEECE5; --paper-lift:#F6F4EE; --card:#FFFFFF;
-    --ink:#181A1B; --ink-soft:#2C2E2E; --body-color:#4A4C4A; --muted:#797C79; --muted-soft:#A7A9A4;
-    --faint:#DCD9D0; --faint-soft:#E8E5DC;
-    --accent:#A6541E; --accent-deep:#7E3E12; --accent-soft:#F1E4D8;
-    --ink-surface:#181A1B; --on-ink:#EEECE5; --on-ink-muted:#9B9C97;
-    --success:#1E7A4C; --success-soft:#DCEEE2; --error:#B0392F; --error-soft:#F5E0DC;
+    --paper:#ECF0F1; --paper-lift:#F4F7F8; --card:#FFFFFF;
+    --ink:#16242B; --ink-soft:#26383F; --body-color:#47585F; --muted:#6E828A; --muted-soft:#9BADB4;
+    --faint:#D2DEE1; --faint-soft:#E2EAEC;
+    --accent:#1D7A55; --accent-deep:#145C3F; --accent-soft:#D9EAE1;
+    --ink-surface:#16242B; --on-ink:#ECF0F1; --on-ink-muted:#93A5AC;
+    --success:#1D7A55; --success-soft:#D9EAE1; --error:#AF443A; --error-soft:#F4E0DD;
 
     --r-card:3px; --r-input:6px; --r-chip:4px; --r-media:16px; --r-pill:999px;
-    --shadow-soft:0 2px 10px rgba(24,26,27,.05);
-    --shadow-halo:0 1px 3px rgba(24,26,27,.04),0 16px 32px rgba(24,26,27,.06);
-    --shadow-lift:0 4px 10px rgba(24,26,27,.06),0 20px 40px rgba(24,26,27,.09);
+    --shadow-soft:0 2px 10px rgba(22,36,43,.05);
+    --shadow-halo:0 1px 3px rgba(22,36,43,.04),0 16px 32px rgba(22,36,43,.06);
+    --shadow-lift:0 4px 10px rgba(22,36,43,.07),0 20px 40px rgba(22,36,43,.10);
 
     --ease-spring:cubic-bezier(.3,1.2,.5,1); --ease-swift:cubic-bezier(.2,.7,.2,1);
     --dur-fast:.15s; --dur:.24s;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --paper:#15171A; --paper-lift:#1B1D1F; --card:#1E2022; --ink:#EDEBE4;
-      --ink-soft:#DEDCD3; --body-color:#B6B4AC; --muted:#8B8D89; --muted-soft:#5C5E5A;
-      --faint:#2C2E2F; --faint-soft:#242628; --accent-soft:#2C1E13; --accent-deep:#DC8244;
-      --ink-surface:#0E0F10; --on-ink:#EDEBE4; --on-ink-muted:#8B8D89;
-      --success-soft:#12301F; --error-soft:#331E1A;
+      --paper:#131C21; --paper-lift:#19242A; --card:#1C282E; --ink:#E7EEF0;
+      --ink-soft:#D3DFE3; --body-color:#AABCC3; --muted:#83969E; --muted-soft:#586A72;
+      --faint:#2A373E; --faint-soft:#212C32;
+      --accent:#43A57B; --accent-deep:#6DC49D; --accent-soft:#12332A;
+      --ink-surface:#0C1418; --on-ink:#E7EEF0; --on-ink-muted:#83969E;
+      --success:#43A57B; --success-soft:#12332A; --error:#D2695C; --error-soft:#37211E;
       --shadow-soft:0 2px 10px rgba(0,0,0,.3); --shadow-halo:0 1px 3px rgba(0,0,0,.3),0 16px 32px rgba(0,0,0,.35);
       --shadow-lift:0 4px 10px rgba(0,0,0,.35),0 20px 40px rgba(0,0,0,.4);
     }
   }
   :root[data-theme="dark"]{
-    --paper:#15171A; --paper-lift:#1B1D1F; --card:#1E2022; --ink:#EDEBE4;
-    --ink-soft:#DEDCD3; --body-color:#B6B4AC; --muted:#8B8D89; --muted-soft:#5C5E5A;
-    --faint:#2C2E2F; --faint-soft:#242628; --accent-soft:#2C1E13; --accent-deep:#DC8244;
-    --ink-surface:#0E0F10; --on-ink:#EDEBE4; --on-ink-muted:#8B8D89;
-    --success-soft:#12301F; --error-soft:#331E1A;
+    --paper:#131C21; --paper-lift:#19242A; --card:#1C282E; --ink:#E7EEF0;
+    --ink-soft:#D3DFE3; --body-color:#AABCC3; --muted:#83969E; --muted-soft:#586A72;
+    --faint:#2A373E; --faint-soft:#212C32;
+    --accent:#43A57B; --accent-deep:#6DC49D; --accent-soft:#12332A;
+    --ink-surface:#0C1418; --on-ink:#E7EEF0; --on-ink-muted:#83969E;
+    --success:#43A57B; --success-soft:#12332A; --error:#D2695C; --error-soft:#37211E;
     --shadow-soft:0 2px 10px rgba(0,0,0,.3); --shadow-halo:0 1px 3px rgba(0,0,0,.3),0 16px 32px rgba(0,0,0,.35);
     --shadow-lift:0 4px 10px rgba(0,0,0,.35),0 20px 40px rgba(0,0,0,.4);
   }
@@ -71,9 +74,13 @@
     font-family:'JetBrains Mono',monospace; font-weight:600; font-size:14px; letter-spacing:.03em;
     color:var(--ink); text-transform:uppercase;
   }
-  nav.tabs{display:flex; gap:22px; max-width:1160px; margin:0 auto; padding:0 24px; border-top:1px solid var(--faint);}
+  nav.tabs{
+    display:flex; gap:22px; max-width:1160px; margin:0 auto; padding:0 24px; border-top:1px solid var(--faint);
+    overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
   nav.tabs button{
-    background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px;
+    background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px; flex:none;
     padding:10px 2px; font-family:'Sofia Sans',sans-serif; font-weight:560; font-size:14px; color:var(--muted);
     transition:color var(--dur-fast) var(--ease-swift), border-color var(--dur-fast) var(--ease-swift);
   }
@@ -156,7 +163,8 @@
   /* ============ shortlist ============ */
   .threshold-row{display:flex; align-items:center; gap:14px; margin-bottom:20px; flex-wrap:wrap;}
   .threshold-row input[type=range]{width:220px; accent-color:var(--accent);}
-  table.shortlist{width:100%; border-collapse:collapse; font-size:14px;}
+  .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  table.shortlist{width:100%; border-collapse:collapse; font-size:14px; min-width:520px;}
   table.shortlist th{
     text-align:left; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
     color:var(--muted-soft); font-weight:600; padding:0 10px 10px; border-bottom:1px solid var(--faint);
@@ -239,6 +247,54 @@
   .footer-row{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:12.5px; color:var(--muted);}
   .footer-actions{display:flex; gap:14px; align-items:center;}
   #import-input{display:none;}
+
+  /* ============ responsive ============ */
+  @media (max-width:900px){
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+  }
+
+  @media (max-width:720px){
+    .wrap{padding:0 16px;}
+    .top-inner{padding:12px 16px;}
+    nav.tabs{padding:0 16px; gap:18px;}
+    main{padding:24px 0 56px;}
+    .section-head h2{font-size:22px;}
+    .panel{padding:16px;}
+    .board{grid-auto-columns:minmax(210px,78vw);}
+    table.shortlist th.col-type, table.shortlist td.col-type,
+    table.shortlist th.col-stage, table.shortlist td.col-stage,
+    table.shortlist th.col-bar, table.shortlist td.col-bar{display:none;}
+    table.shortlist{min-width:0;}
+    table.shortlist td{padding:10px 8px;}
+    .method-item{gap:4px; padding:12px 0;}
+    .footer-row{flex-direction:column; align-items:flex-start; gap:12px;}
+    .overlay{padding:0;}
+    .modal{border-radius:0; min-height:100%;}
+    .modal-body{max-height:none;}
+    .modal-head, .modal-body, .modal-foot{padding-left:16px; padding-right:16px;}
+  }
+
+  @media (max-width:480px){
+    .stat-row{grid-template-columns:1fr;}
+    .stat-card .value{font-size:24px;}
+    .threshold-row{display:grid; grid-template-columns:1fr auto; gap:8px 12px; align-items:center;}
+    .threshold-row label{grid-row:1; grid-column:1;}
+    .threshold-row #threshold-val{grid-row:1; grid-column:2;}
+    .threshold-row input[type=range]{grid-row:2; grid-column:1 / -1; width:100%;}
+    .assist-row{flex-direction:column; align-items:stretch;}
+    .assist-row .btn{justify-content:center;}
+    .modal-foot{flex-wrap:wrap; gap:10px;}
+    .modal-foot > div{width:100%;}
+    .modal-foot .btn{flex:1; justify-content:center;}
+  }
+
+  /* comfortable touch targets on touch devices */
+  @media (hover:none) and (pointer:coarse){
+    .btn{min-height:42px;}
+    nav.tabs button{padding-top:13px; padding-bottom:13px;}
+    select.stage-quick{min-height:30px;}
+    .btn-text{padding:8px 2px;}
+  }
 
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important; transition:none !important;}
@@ -674,16 +730,17 @@
     var counts = STAGES.map(function(_,i){ return ideas.filter(function(o){return o.stage===i;}).length; });
     var max = Math.max.apply(null, counts.concat([1]));
     var totalLive = counts.reduce(function(a,b){return a+b;},0) || 1;
-    var W = 560, H = 330, top=10, rowH=58, gap=8, minW=90, maxW=440;
-    var svgns = "http://www.w3.org/2000/svg";
+    var W = 560, top=10, rowH=58, gap=8;
+    var labelW = 168, plotL = labelW, plotW = W - labelW - 8;
+    var cx = plotL + plotW/2, minW = 54, maxW = plotW;
     var parts = [];
     STAGES.forEach(function(name,i){
       var wTop = minW + (maxW-minW) * (counts[i]/max);
       var wBot = wTop * 0.84;
       var y0 = top + i*(rowH+gap);
       var y1 = y0 + rowH;
-      var xTop0 = (W-wTop)/2, xTop1 = xTop0+wTop;
-      var xBot0 = (W-wBot)/2, xBot1 = xBot0+wBot;
+      var xTop0 = cx-wTop/2, xTop1 = xTop0+wTop;
+      var xBot0 = cx-wBot/2, xBot1 = xBot0+wBot;
       var op = (0.32 + i*0.14).toFixed(2);
       var pct = Math.round(counts[i]/totalLive*100);
       parts.push(
@@ -802,16 +859,17 @@
       return '<tr data-id="'+o.id+'" style="cursor:pointer;">'+
         '<td class="rank mono">'+(i+1)+'</td>'+
         '<td>'+escapeXml(o.title)+'</td>'+
-        '<td><span class="tag">'+o.type+'</span></td>'+
+        '<td class="col-type"><span class="tag">'+o.type+'</span></td>'+
         '<td><span class="tag">'+horizonMark(o.horizon)+o.horizon+'</span></td>'+
-        '<td class="mono">TRL '+o.trl+'</td>'+
-        '<td class="mono">'+STAGES[o.stage]+'</td>'+
-        '<td><div class="bar-track"><div class="bar-fill" style="width:'+s+'%; background:'+scoreColor(s)+'"></div></div></td>'+
+        '<td class="mono col-trl">TRL '+o.trl+'</td>'+
+        '<td class="mono col-stage">'+STAGES[o.stage]+'</td>'+
+        '<td class="col-bar"><div class="bar-track"><div class="bar-fill" style="width:'+s+'%; background:'+scoreColor(s)+'"></div></div></td>'+
         '<td class="mono" style="font-weight:600;">'+s+'</td>'+
         '</tr>';
     }).join("");
     wrap.innerHTML =
-      '<table class="shortlist"><thead><tr><th>#</th><th>Idea</th><th>Type</th><th>Horizon</th><th>TRL</th><th>Stage</th><th>Score</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+      '<div class="table-scroll"><table class="shortlist"><thead><tr><th>#</th><th>Idea</th><th class="col-type">Type</th><th>Horizon</th>'+
+      '<th class="col-trl">TRL</th><th class="col-stage">Stage</th><th class="col-bar">Score</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
     wrap.querySelectorAll("tr[data-id]").forEach(function(tr){
       tr.addEventListener("click", function(){ openModal(tr.getAttribute("data-id")); });
     });
