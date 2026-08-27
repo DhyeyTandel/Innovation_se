@@ -8,12 +8,15 @@
 <style>
   /* ============ tokens ============ */
   :root{
-    --paper:#ECF0F1; --paper-lift:#F4F7F8; --card:#FFFFFF;
-    --ink:#16242B; --ink-soft:#26383F; --body-color:#47585F; --muted:#6E828A; --muted-soft:#9BADB4;
-    --faint:#D2DEE1; --faint-soft:#E2EAEC;
-    --accent:#1D7A55; --accent-deep:#145C3F; --accent-soft:#D9EAE1;
-    --ink-surface:#16242B; --on-ink:#ECF0F1; --on-ink-muted:#93A5AC;
-    --success:#1D7A55; --success-soft:#D9EAE1; --error:#AF443A; --error-soft:#F4E0DD;
+    color-scheme:light;
+    /* Schneider Electric green — #3DCD58, Pantone 2270 C */
+    --brand:#3DCD58; --on-brand:#0A2E15;
+    --paper:#EDEFF2; --paper-lift:#F6F7F9; --card:#FFFFFF;
+    --ink:#1A2229; --ink-soft:#2B353D; --body-color:#4A5560; --muted:#6E7B87; --muted-soft:#9AA6B1;
+    --faint:#D5DAE0; --faint-soft:#E5E9ED;
+    --accent:#0C7A32; --accent-deep:#095C26; --accent-soft:#DFF3E3; --on-accent:#FFFFFF;
+    --ink-surface:#1A2229; --on-ink:#EDEFF2; --on-ink-muted:#98A4AF;
+    --success:#0C7A32; --success-soft:#DFF3E3; --error:#B3352B; --error-soft:#F6E1DE;
 
     --r-card:3px; --r-input:6px; --r-chip:4px; --r-media:16px; --r-pill:999px;
     --shadow-soft:0 2px 10px rgba(22,36,43,.05);
@@ -25,23 +28,25 @@
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --paper:#131C21; --paper-lift:#19242A; --card:#1C282E; --ink:#E7EEF0;
-      --ink-soft:#D3DFE3; --body-color:#AABCC3; --muted:#83969E; --muted-soft:#586A72;
-      --faint:#2A373E; --faint-soft:#212C32;
-      --accent:#43A57B; --accent-deep:#6DC49D; --accent-soft:#12332A;
-      --ink-surface:#0C1418; --on-ink:#E7EEF0; --on-ink-muted:#83969E;
-      --success:#43A57B; --success-soft:#12332A; --error:#D2695C; --error-soft:#37211E;
+      color-scheme:dark;
+      --paper:#111A1F; --paper-lift:#182229; --card:#1B262D; --ink:#E9EDF0;
+      --ink-soft:#D6DDE3; --body-color:#AEBAC3; --muted:#87949E; --muted-soft:#5B6871;
+      --faint:#2A353D; --faint-soft:#212B32;
+      --accent:#3DCD58; --accent-deep:#6FE083; --accent-soft:#12331C; --on-accent:#0A2E15;
+      --ink-surface:#0B1216; --on-ink:#E9EDF0; --on-ink-muted:#87949E;
+      --success:#3DCD58; --success-soft:#12331C; --error:#D8695C; --error-soft:#38201C;
       --shadow-soft:0 2px 10px rgba(0,0,0,.3); --shadow-halo:0 1px 3px rgba(0,0,0,.3),0 16px 32px rgba(0,0,0,.35);
       --shadow-lift:0 4px 10px rgba(0,0,0,.35),0 20px 40px rgba(0,0,0,.4);
     }
   }
   :root[data-theme="dark"]{
-    --paper:#131C21; --paper-lift:#19242A; --card:#1C282E; --ink:#E7EEF0;
-    --ink-soft:#D3DFE3; --body-color:#AABCC3; --muted:#83969E; --muted-soft:#586A72;
-    --faint:#2A373E; --faint-soft:#212C32;
-    --accent:#43A57B; --accent-deep:#6DC49D; --accent-soft:#12332A;
-    --ink-surface:#0C1418; --on-ink:#E7EEF0; --on-ink-muted:#83969E;
-    --success:#43A57B; --success-soft:#12332A; --error:#D2695C; --error-soft:#37211E;
+    color-scheme:dark;
+    --paper:#111A1F; --paper-lift:#182229; --card:#1B262D; --ink:#E9EDF0;
+    --ink-soft:#D6DDE3; --body-color:#AEBAC3; --muted:#87949E; --muted-soft:#5B6871;
+    --faint:#2A353D; --faint-soft:#212B32;
+    --accent:#3DCD58; --accent-deep:#6FE083; --accent-soft:#12331C; --on-accent:#0A2E15;
+    --ink-surface:#0B1216; --on-ink:#E9EDF0; --on-ink-muted:#87949E;
+    --success:#3DCD58; --success-soft:#12331C; --error:#D8695C; --error-soft:#38201C;
     --shadow-soft:0 2px 10px rgba(0,0,0,.3); --shadow-halo:0 1px 3px rgba(0,0,0,.3),0 16px 32px rgba(0,0,0,.35);
     --shadow-lift:0 4px 10px rgba(0,0,0,.35),0 20px 40px rgba(0,0,0,.4);
   }
@@ -91,8 +96,18 @@
     padding:8px 16px; font-weight:600; font-size:14px; transition:transform var(--dur-fast) var(--ease-swift), box-shadow var(--dur-fast);
   }
   .btn:active{transform:scale(.97);}
-  .btn-primary{background:var(--accent); color:#fff;}
+  .btn-primary{background:var(--brand); color:var(--on-brand);}
   .btn-primary:hover{box-shadow:var(--shadow-lift); transform:translateY(-1px);}
+  .top-actions{display:flex; align-items:center; gap:10px; flex:none;}
+  .icon-btn{
+    display:inline-flex; align-items:center; justify-content:center; flex:none;
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--faint);
+    background:transparent; color:var(--ink-soft); padding:0;
+    transition:border-color var(--dur-fast) var(--ease-swift), color var(--dur-fast) var(--ease-swift);
+  }
+  .icon-btn:hover{border-color:var(--accent); color:var(--accent);}
+  .icon-btn:active{transform:scale(.94);}
+  .icon-btn svg{width:17px; height:17px; display:block;}
   .btn-ghost{background:transparent; border-color:var(--faint); color:var(--ink-soft);}
   .btn-ghost:hover{border-color:var(--muted-soft);}
   .btn-text{background:none; border:none; color:var(--muted); font-weight:600; font-size:13px; padding:4px 2px; text-decoration:underline; text-decoration-color:var(--faint);}
@@ -291,6 +306,7 @@
   /* comfortable touch targets on touch devices */
   @media (hover:none) and (pointer:coarse){
     .btn{min-height:42px;}
+    .icon-btn{width:42px; height:42px;}
     nav.tabs button{padding-top:13px; padding-bottom:13px;}
     select.stage-quick{min-height:30px;}
     .btn-text{padding:8px 2px;}
@@ -301,10 +317,19 @@
   }
 </style>
 
+<script>
+/* Stamp the saved theme before first paint so the page never flashes the wrong one. */
+(function(){try{var v=localStorage.getItem("horizonfunnel.theme");
+if(v==="light"||v==="dark")document.documentElement.setAttribute("data-theme",v);}catch(e){}})();
+</script>
+
 <header class="top">
   <div class="top-inner">
     <span class="wordmark">Horizon Funnel</span>
-    <button class="btn btn-primary" id="btn-new">+ New idea</button>
+    <div class="top-actions">
+      <button class="icon-btn" id="btn-theme" type="button" aria-label="Switch theme"></button>
+      <button class="btn btn-primary" id="btn-new">+ New idea</button>
+    </div>
   </div>
   <nav class="tabs" id="tabnav">
     <button data-tab="overview" class="active">Overview</button>
@@ -335,9 +360,9 @@
         <div class="hint">Size = score. Click to open.</div>
         <div class="scroller"><svg id="matrix-svg" viewBox="0 0 560 300" style="width:100%; height:auto; min-width:420px;"></svg></div>
         <div class="legend">
-          <div class="legend-item"><span class="legend-dot" style="background:var(--accent); opacity:.9"></span>H1 · near-term</div>
-          <div class="legend-item"><span class="legend-dot" style="background:var(--accent); opacity:.5"></span>H2 · adjacent</div>
-          <div class="legend-item"><span class="legend-dot" style="background:var(--accent); opacity:.22"></span>H3 · future bet</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--brand); opacity:.95"></span>H1 · near-term</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--brand); opacity:.6"></span>H2 · adjacent</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--brand); opacity:.32"></span>H3 · future bet</div>
         </div>
       </div>
     </div>
@@ -592,8 +617,50 @@
   ];
 
   var STORAGE_KEY = "horizonfunnel.ideas.v2";
+  var THEME_KEY = "horizonfunnel.theme";
   var ideas = [];
   var editingId = null;
+
+  /* ---------- theme ---------- */
+  var ICON_SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">'+
+    '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6'+
+    'M2.6 12h2.2M19.2 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>';
+  var ICON_MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" '+
+    'stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.4 8.4 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7Z"/></svg>';
+
+  function systemTheme(){
+    try{ return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+    catch(e){ return "light"; }
+  }
+  function storedTheme(){
+    try{ var v = localStorage.getItem(THEME_KEY); return (v==="light"||v==="dark") ? v : null; }
+    catch(e){ return null; }
+  }
+  function effectiveTheme(){ return storedTheme() || systemTheme(); }
+
+  function paintThemeButton(theme){
+    var btn = document.getElementById("btn-theme");
+    var next = theme==="dark" ? "light" : "dark";
+    btn.innerHTML = theme==="dark" ? ICON_SUN : ICON_MOON;
+    btn.setAttribute("aria-label", "Switch to "+next+" theme");
+    btn.setAttribute("title", "Switch to "+next+" theme");
+  }
+  function toggleTheme(){
+    var next = effectiveTheme()==="dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+    paintThemeButton(next);
+  }
+  function initTheme(){
+    paintThemeButton(effectiveTheme());
+    // With no explicit choice saved, keep following the OS setting live.
+    try{
+      var mq = window.matchMedia("(prefers-color-scheme: dark)");
+      var onChange = function(){ if(!storedTheme()) paintThemeButton(systemTheme()); };
+      if(mq.addEventListener) mq.addEventListener("change", onChange);
+      else if(mq.addListener) mq.addListener(onChange);
+    }catch(e){}
+  }
 
   function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
@@ -718,9 +785,9 @@
     var mix = el("div","horizon-mix");
     var t = total||1;
     mix.innerHTML =
-      '<span style="width:'+(h1/t*100)+'%; background:var(--accent); opacity:.9"></span>'+
-      '<span style="width:'+(h2/t*100)+'%; background:var(--accent); opacity:.5"></span>'+
-      '<span style="width:'+(h3/t*100)+'%; background:var(--accent); opacity:.22"></span>';
+      '<span style="width:'+(h1/t*100)+'%; background:var(--brand); opacity:.95"></span>'+
+      '<span style="width:'+(h2/t*100)+'%; background:var(--brand); opacity:.6"></span>'+
+      '<span style="width:'+(h3/t*100)+'%; background:var(--brand); opacity:.32"></span>';
     mixCard.appendChild(mix);
     row.appendChild(mixCard);
   }
@@ -744,7 +811,7 @@
       var op = (0.32 + i*0.14).toFixed(2);
       var pct = Math.round(counts[i]/totalLive*100);
       parts.push(
-        '<polygon points="'+xTop0+','+y0+' '+xTop1+','+y0+' '+xBot1+','+y1+' '+xBot0+','+y1+'" fill="var(--accent)" opacity="'+op+'"></polygon>'+
+        '<polygon points="'+xTop0+','+y0+' '+xTop1+','+y0+' '+xBot1+','+y1+' '+xBot0+','+y1+'" fill="var(--brand)" opacity="'+op+'"></polygon>'+
         '<text x="12" y="'+(y0+rowH/2-6)+'" font-size="12" font-weight="600" fill="var(--ink)">'+name+'</text>'+
         '<text x="12" y="'+(y0+rowH/2+12)+'" font-size="10" fill="var(--muted)">'+counts[i]+' idea'+(counts[i]===1?"":"s")+' · '+pct+'% of pipeline</text>'
       );
@@ -792,7 +859,7 @@
         var s = composite(o);
         var r = 6 + (s/100)*11;
         var op = HORIZONS[o.horizon].opacity;
-        svgns_parts.push('<circle data-id="'+o.id+'" cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="var(--accent)" fill-opacity="'+op+'" stroke="var(--accent)" stroke-width="1.5" style="cursor:pointer;"><title>'+escapeXml(o.title)+" — TRL "+o.trl+" — "+HORIZONS[o.horizon].label+" — score "+s+'</title></circle>');
+        svgns_parts.push('<circle data-id="'+o.id+'" cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="var(--brand)" fill-opacity="'+op+'" stroke="var(--brand)" stroke-width="1.5" style="cursor:pointer;"><title>'+escapeXml(o.title)+" — TRL "+o.trl+" — "+HORIZONS[o.horizon].label+" — score "+s+'</title></circle>');
       });
     });
 
@@ -1034,6 +1101,7 @@
     document.getElementById("tab-"+btn.getAttribute("data-tab")).classList.add("active");
   });
 
+  document.getElementById("btn-theme").addEventListener("click", toggleTheme);
   document.getElementById("btn-new").addEventListener("click", function(){ openModal(null); });
   document.getElementById("modal-close").addEventListener("click", closeModal);
   document.getElementById("btn-cancel").addEventListener("click", closeModal);
@@ -1062,6 +1130,7 @@
     e.target.value = "";
   });
 
+  initTheme();
   load();
   renderTrlTable();
   renderAll();
